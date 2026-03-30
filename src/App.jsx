@@ -196,14 +196,14 @@ function App() {
 
       <header className="topbar">
         <button className="ghost-button" onClick={goToLibrary}>
-          Рљ РєРЅРёРіР°Рј
+          К книгам
         </button>
         <div className="topbar-title">
-          <span className="eyebrow">РџСЂРѕС‚РѕС‚РёРї MVP</span>
+          <span className="eyebrow">Прототип MVP</span>
           <strong>{story.title}</strong>
         </div>
         <button className="ghost-button" onClick={toggleSound}>
-          {progress.soundOn ? 'Р—РІСѓРє: РІРєР»' : 'Р—РІСѓРє: РІС‹РєР»'}
+          {progress.soundOn ? 'Звук: вкл' : 'Звук: выкл'}
         </button>
       </header>
 
@@ -211,26 +211,26 @@ function App() {
         <main className="library-layout">
           <section className="hero-panel">
             <div className="hero-copy">
-              <span className="eyebrow">РњСѓР»СЊС‚СЏС€РЅС‹Р№ РєРІРµСЃС‚ РґР»СЏ РґРµС‚РµР№ {story.age}</span>
+              <span className="eyebrow">Мультяшный квест для детей {story.age}</span>
               <h1>{story.title}</h1>
               <p>{story.description}</p>
               <div className="hero-facts">
-                <span>Р›РёСЃС‚Р°РЅРёРµ РїРѕ СЌРєСЂР°РЅР°Рј</span>
-                <span>Р’С‹Р±РѕСЂС‹ РІР»РёСЏСЋС‚ РЅР° РїСѓС‚СЊ</span>
-                <span>РџРѕРґС…РѕРґРёС‚ РґР»СЏ Р±СѓРґСѓС‰РёС… СЃРµСЂРёР№</span>
+                <span>Листание по экранам</span>
+                <span>Выборы влияют на путь</span>
+                <span>Подходит для будущих серий</span>
               </div>
               <div className="cta-row">
                 <button className="primary-button" onClick={resumeChapter}>
-                  РџСЂРѕРґРѕР»Р¶РёС‚СЊ
+                  Продолжить
                 </button>
                 <button className="secondary-button" onClick={startChapter}>
-                  РќР°С‡Р°С‚СЊ Р·Р°РЅРѕРІРѕ
+                  Начать заново
                 </button>
               </div>
             </div>
             <IllustrationCard
-              label="РћР±Р»РѕР¶РєР° РёСЃС‚РѕСЂРёРё"
-              description="Р—РґРµСЃСЊ РїРѕР·Р¶Рµ РїРѕСЏРІРёС‚СЃСЏ РіР»Р°РІРЅР°СЏ РёР»Р»СЋСЃС‚СЂР°С†РёСЏ СЃРєР°Р·РєРё СЃ РђР»РµС€РєРѕР№, Р’РѕР»С€РµР±РЅРёРєРѕРј Рё Р’РѕР»С€РµР±РЅРѕР№ РєРЅРёРіРѕР№."
+              label="Обложка истории"
+              description="Здесь позже появится главная иллюстрация сказки с Алешкой, Волшебником и Волшебной книгой."
               accent="cover"
             />
           </section>
@@ -238,65 +238,65 @@ function App() {
           <section className="chapter-grid">
             <article className="chapter-card featured">
               <div className="chapter-card-head">
-                <div className="chapter-badge">Р”РѕСЃС‚СѓРїРЅР° СЃРµР№С‡Р°СЃ</div>
+                <div className="chapter-badge">Доступна сейчас</div>
                 <div className="chapter-status">
-                  {storyComplete ? 'Р“Р»Р°РІР° РїСЂРѕР№РґРµРЅР°' : 'РџСЂРѕС‚РѕС‚РёРї РІ СЂР°Р±РѕС‚Рµ'}
+                  {storyComplete ? 'Глава пройдена' : 'Прототип в работе'}
                 </div>
               </div>
               <h2>{chapter.title}</h2>
               <p>
-                Р’СЃС‚СѓРїР»РµРЅРёРµ, Р·РЅР°РєРѕРјСЃС‚РІРѕ СЃ Р’РѕР»С€РµР±РЅРёРєРѕРј, РєР°С‚СЃС†РµРЅР°, РјРёРЅРё-РёРіСЂР° РЅР° СЃР±РѕСЂ
-                РІРѕР»С€РµР±СЃС‚РІР° Рё РїРµСЂРІР°СЏ РІР°Р¶РЅР°СЏ СЂР°Р·РІРёР»РєР°.
+                Вступление, знакомство с Волшебником, катсцена, мини-игра на сбор
+                волшебства и первая важная развилка.
               </p>
               <div className="chapter-meta">
-                <span>{chapter.screens.length} СЌРєСЂР°РЅРѕРІ</span>
-                <span>1 РјРёРЅРё-РёРіСЂР°</span>
-                <span>1 СЂР°Р·РІРёР»РєР°</span>
+                <span>{chapter.screens.length} экранов</span>
+                <span>1 мини-игра</span>
+                <span>1 развилка</span>
               </div>
               <div className="chapter-progress">
                 <div className="chapter-progress-bar" style={{ width: `${sceneProgress}%` }} />
               </div>
               <div className="chapter-actions">
                 <button className="primary-button" onClick={resumeChapter}>
-                  РћС‚РєСЂС‹С‚СЊ РіР»Р°РІСѓ
+                  Открыть главу
                 </button>
                 <button className="secondary-button" onClick={restartChapter}>
-                  РЎР±СЂРѕСЃРёС‚СЊ РїСЂРѕРіСЂРµСЃСЃ
+                  Сбросить прогресс
                 </button>
               </div>
             </article>
 
             <article className="chapter-card muted">
               <div className="chapter-card-head">
-                <div className="chapter-badge soft">РџРѕР·Р¶Рµ</div>
-                <div className="chapter-status soft">РЎР»РµРґСѓСЋС‰РёРµ РёСЃС‚РѕСЂРёРё</div>
+                <div className="chapter-badge soft">Позже</div>
+                <div className="chapter-status soft">Следующие истории</div>
               </div>
-              <h2>Р‘СѓРґСѓС‰РёРµ РіР»Р°РІС‹</h2>
+              <h2>Будущие главы</h2>
               <p>
-                Р—РґРµСЃСЊ РїРѕР·Р¶Рµ РїРѕСЏРІСЏС‚СЃСЏ РґСЂСѓРіРёРµ РїСЂРёРєР»СЋС‡РµРЅРёСЏ РђР»РµС€РєРё, РєР°СЂС‚Р° РєРЅРёРіРё, РІС‹Р±РѕСЂ
-                РёСЃС‚РѕСЂРёРё Рё РїРµСЂРµС…РѕРґС‹ РјРµР¶РґСѓ СЃСЋР¶РµС‚РЅС‹РјРё РІРµС‚РєР°РјРё.
+                Здесь позже появятся другие приключения Алешки, карта книги, выбор
+                истории и переходы между сюжетными ветками.
               </p>
               <div className="chapter-meta">
-                <span>РќР°РІРёРіР°С†РёСЏ РїРѕ СЃРµСЂРёСЏРј</span>
-                <span>Р›РёС‡РЅС‹Р№ РєР°Р±РёРЅРµС‚</span>
-                <span>РЎРѕС…СЂР°РЅРµРЅРёСЏ</span>
+                <span>Навигация по сериям</span>
+                <span>Личный кабинет</span>
+                <span>Сохранения</span>
               </div>
             </article>
           </section>
 
           <section className="prototype-notes">
             <div className="note-card">
-              <span className="eyebrow">РњРµС…Р°РЅРёРєР° MVP</span>
+              <span className="eyebrow">Механика MVP</span>
               <strong>
-                РЎРµР№С‡Р°СЃ РїСЂРѕС‚РѕС‚РёРї РїРѕРєР°Р·С‹РІР°РµС‚, РєР°Рє С‡РёС‚Р°С‚СЊ, РІС‹Р±РёСЂР°С‚СЊ Рё РїРµСЂРµС…РѕРґРёС‚СЊ РјРµР¶РґСѓ
-                СЃС†РµРЅР°РјРё.
+                Сейчас прототип показывает, как читать, выбирать и переходить между
+                сценами.
               </strong>
             </div>
             <div className="note-card">
-              <span className="eyebrow">РЎР»РµРґСѓСЋС‰РёР№ СЃР»РѕР№</span>
+              <span className="eyebrow">Следующий слой</span>
               <strong>
-                РџРѕС‚РѕРј СЃСЋРґР° С…РѕСЂРѕС€Рѕ Р»СЏР¶РµС‚ РёРЅРІРµРЅС‚Р°СЂСЊ, РєР°СЂС‚Р° СЃРєР°Р·РєРё Рё СЃРѕС…СЂР°РЅРµРЅРёРµ
-                РЅРµСЃРєРѕР»СЊРєРёС… РёСЃС‚РѕСЂРёР№.
+                Потом сюда хорошо ляжет инвентарь, карта сказки и сохранение
+                нескольких историй.
               </strong>
             </div>
           </section>
@@ -304,25 +304,25 @@ function App() {
       ) : (
         <main className="reader-layout">
           <aside className="reader-sidebar">
-            <div className="story-chip">Р“Р»Р°РІР° 1</div>
+            <div className="story-chip">Глава 1</div>
             <h2>{chapter.title}</h2>
             <p>
-              РџСЂРѕСЃС‚РѕР№ С„РѕСЂРјР°С‚ РґР»СЏ СЂРµР±РµРЅРєР°: Р»РёСЃС‚Р°Р№ РІРїРµСЂРµРґ, РЅР°Р·Р°Рґ Рё РґРµР»Р°Р№ РІС‹Р±РѕСЂ С‚Р°Рј,
-              РіРґРµ РёСЃС‚РѕСЂРёСЏ РјРµРЅСЏРµС‚СЃСЏ.
+              Простой формат для ребенка: листай вперед, назад и делай выбор там,
+              где история меняется.
             </p>
             <div className="progress-box">
-              <span>Р­РєСЂР°РЅ</span>
+              <span>Экран</span>
               <strong>
                 {progress.screenIndex + 1} / {chapter.screens.length}
               </strong>
             </div>
             <div className="progress-box">
-              <span>Р’С‹Р±РѕСЂ</span>
-              <strong>{progress.mealChoice ? 'СЃРґРµР»Р°РЅ' : 'РїРѕРєР° РЅРµС‚'}</strong>
+              <span>Выбор</span>
+              <strong>{progress.mealChoice ? 'сделан' : 'пока нет'}</strong>
             </div>
             <div className="progress-box">
-              <span>Р’РѕР»С€РµР±СЃС‚РІРѕ</span>
-              <strong>{progress.collectedBooks.length} РєРЅРёРі</strong>
+              <span>Волшебство</span>
+              <strong>{progress.collectedBooks.length} книг</strong>
             </div>
             <div className="scene-track">
               {chapter.screens.map((screen, index) => (
@@ -331,12 +331,12 @@ function App() {
                   type="button"
                   className={`scene-dot ${index === progress.screenIndex ? 'active' : ''} ${index < progress.screenIndex ? 'seen' : ''}`}
                   onClick={() => jumpToScreen(index)}
-                  aria-label={`РџРµСЂРµР№С‚Рё Рє СЌРєСЂР°РЅСѓ ${index + 1}`}
+                  aria-label={`Перейти к экрану ${index + 1}`}
                 />
               ))}
             </div>
             <button className="secondary-button wide" onClick={restartChapter}>
-              РќР°С‡Р°С‚СЊ СЃРЅР°С‡Р°Р»Р°
+              Начать сначала
             </button>
           </aside>
 
@@ -359,14 +359,14 @@ function App() {
       {view === 'reader' && (
         <footer className="reader-footer">
           <button className="ghost-button" onClick={goBack}>
-            РќР°Р·Р°Рґ
+            Назад
           </button>
           <div className="footer-hint">
             {activeScreen.type === 'miniGame'
-              ? 'РЎРЅР°С‡Р°Р»Р° СЃРѕР±РµСЂРё 5 РІРѕР»С€РµР±РЅС‹С… РєРЅРёРі.'
+              ? 'Сначала собери 5 волшебных книг.'
               : activeScreen.type === 'choice'
-                ? 'Р’С‹Р±РѕСЂ РѕРїСЂРµРґРµР»РёС‚ СЃР»РµРґСѓСЋС‰СѓСЋ РІРµС‚РєСѓ РёСЃС‚РѕСЂРёРё.'
-                : 'Р›РёСЃС‚Р°Р№ СЃРєР°Р·РєСѓ РІРїРµСЂРµРґ РІ СѓРґРѕР±РЅРѕРј С‚РµРјРїРµ.'}
+                ? 'Выбор определит следующую ветку истории.'
+                : 'Листай сказку вперед в удобном темпе.'}
           </div>
           <button
             className="primary-button"
@@ -374,8 +374,8 @@ function App() {
             disabled={nextDisabled || progress.screenIndex >= chapter.screens.length - 1}
           >
             {progress.screenIndex >= chapter.screens.length - 1
-              ? 'Р“Р»Р°РІР° Р·Р°РІРµСЂС€РµРЅР°'
-              : 'Р”Р°Р»СЊС€Рµ'}
+              ? 'Глава завершена'
+              : 'Дальше'}
           </button>
         </footer>
       )}
@@ -397,127 +397,127 @@ function ScreenContent({
     <article className={`screen-card screen-enter ${direction}`}>
       <div className="page-surface page-surface-copy">
         <div className="screen-copy">
-        <span className="eyebrow">
-          {screen.type === 'cover' ? 'РћР±Р»РѕР¶РєР°' : `Р­РєСЂР°РЅ: ${screen.title}`}
-        </span>
-        <h1>{screen.title}</h1>
+          <span className="eyebrow">
+            {screen.type === 'cover' ? 'Обложка' : `Экран: ${screen.title}`}
+          </span>
+          <h1>{screen.title}</h1>
 
-        {screen.text && typeof screen.text === 'string' ? <p>{screen.text}</p> : null}
-        {Array.isArray(screen.text)
-          ? screen.text.map((paragraph) => <p key={paragraph}>{paragraph}</p>)
-          : null}
+          {screen.text && typeof screen.text === 'string' ? <p>{screen.text}</p> : null}
+          {Array.isArray(screen.text)
+            ? screen.text.map((paragraph) => <p key={paragraph}>{paragraph}</p>)
+            : null}
 
-        {screen.dialogue ? (
-          <div className="dialogue-list">
-            {screen.dialogue.map(([speaker, line]) => (
-              <div className="dialogue-line" key={`${speaker}-${line}`}>
-                <strong>{speaker}</strong>
-                <span>{line}</span>
-              </div>
-            ))}
-          </div>
-        ) : null}
-
-        {screen.type === 'slideshow' ? (
-          <div className="slide-list">
-            {screen.slides.map((slide, index) => (
-              <section className="slide-card" key={slide.title}>
-                <span className="slide-index">РљР°РґСЂ {index + 1}</span>
-                <h3>{slide.title}</h3>
-                <p>{slide.text}</p>
-              </section>
-            ))}
-          </div>
-        ) : null}
-
-        {screen.type === 'miniGame' ? (
-          <div className="mini-game">
-            <div className="meter-row">
-              <span>РЁРєР°Р»Р° РІРѕР»С€РµР±СЃС‚РІР°</span>
-              <strong>
-                {Math.min(collectedBooks.length, screen.targetCount)} / {screen.targetCount}
-              </strong>
-            </div>
-            <div className="meter">
-              <div
-                className="meter-fill"
-                style={{
-                  width: `${(Math.min(collectedBooks.length, screen.targetCount) / screen.targetCount) * 100}%`,
-                }}
-              />
-            </div>
-            <div className="books-grid">
-              {screen.books.map((book) => {
-                const selected = collectedBooks.includes(book.id);
-                return (
-                  <button
-                    className={`book-spine ${selected ? 'selected' : ''} ${book.isMagic ? 'magic' : 'plain'}`}
-                    key={book.id}
-                    onClick={() => onBookClick(book)}
-                    type="button"
-                  >
-                    {book.label}
-                  </button>
-                );
-              })}
-            </div>
-            <p className="helper-text">
-              РќР°Р¶РёРјР°Р№ РЅР° РєРЅРёР¶РєРё СЃРѕ СЃРєР°Р·РѕС‡РЅС‹Рј РЅР°СЃС‚СЂРѕРµРЅРёРµРј. РћР±С‹С‡РЅС‹Рµ СѓС‡РµР±РЅРёРєРё Рё
-              СЃРїСЂР°РІРѕС‡РЅРёРєРё РЅРµ РґР°РґСѓС‚ РІРѕР»С€РµР±РЅРѕР№ РёСЃРєСЂС‹.
-            </p>
-            {miniGameComplete ? <div className="success-box">{screen.successText}</div> : null}
-          </div>
-        ) : null}
-
-        {screen.type === 'choice' ? (
-          <>
-            <div className="question-bubble">{screen.question}</div>
-            <div className="choice-grid">
-              {screen.options.map((option) => (
-                <button
-                  className={`choice-card ${mealChoice === option.id ? 'selected' : ''}`}
-                  key={option.id}
-                  onClick={() => onMealChoose(option.id)}
-                  type="button"
-                >
-                  <strong>{option.label}</strong>
-                  <span>{option.summary}</span>
-                </button>
+          {screen.dialogue ? (
+            <div className="dialogue-list">
+              {screen.dialogue.map(([speaker, line]) => (
+                <div className="dialogue-line" key={`${speaker}-${line}`}>
+                  <strong>{speaker}</strong>
+                  <span>{line}</span>
+                </div>
               ))}
             </div>
-          </>
-        ) : null}
+          ) : null}
 
-        {screen.type === 'ending' && mealBranch ? (
-          <div className="branch-box">
-            <strong>РС‚РѕРі РІС‹Р±СЂР°РЅРЅРѕР№ РІРµС‚РєРё</strong>
-            <p>{mealBranch.lead}</p>
-            <p>{mealBranch.promise}</p>
-            <div className="mirror-note">
-              Р’РѕР»С€РµР±РЅРѕРµ Р·РµСЂРєР°Р»СЊС†Рµ РѕСЃС‚Р°РµС‚СЃСЏ Сѓ РђР»РµС€РєРё Рё СЃС‚Р°РЅРµС‚ СѓРґРѕР±РЅС‹Рј РёРіСЂРѕРІС‹Рј
-              СЌР»РµРјРµРЅС‚РѕРј РґР»СЏ РїРѕРґСЃРєР°Р·РѕРє РІ СЃР»РµРґСѓСЋС‰РёС… РіР»Р°РІР°С….
+          {screen.type === 'slideshow' ? (
+            <div className="slide-list">
+              {screen.slides.map((slide, index) => (
+                <section className="slide-card" key={slide.title}>
+                  <span className="slide-index">Кадр {index + 1}</span>
+                  <h3>{slide.title}</h3>
+                  <p>{slide.text}</p>
+                </section>
+              ))}
             </div>
-          </div>
-        ) : null}
+          ) : null}
 
-        {screen.type === 'ending' ? (
-          <div className="author-note">
-            <strong>Р—Р°РґРµР» РЅР° РїСЂРѕРґРѕР»Р¶РµРЅРёРµ</strong>
-            <p>
-              Р’ СЃР»РµРґСѓСЋС‰РµР№ РіР»Р°РІРµ РјРѕР¶РЅРѕ РґРѕР±Р°РІРёС‚СЊ РІС‹Р±РѕСЂ РІРµС‰РµР№, РєРѕС‚РѕСЂС‹Рµ РђР»РµС€РєР° Р±РµСЂРµС‚ СЃ
-              СЃРѕР±РѕР№: РЅР°РїСЂРёРјРµСЂ, "Р®РЅС‹Р№ РёРЅР¶РµРЅРµСЂ" РёР»Рё РїРѕС…РѕРґРЅСѓСЋ СЌРЅС†РёРєР»РѕРїРµРґРёСЋ.
-            </p>
-          </div>
-        ) : null}
+          {screen.type === 'miniGame' ? (
+            <div className="mini-game">
+              <div className="meter-row">
+                <span>Шкала волшебства</span>
+                <strong>
+                  {Math.min(collectedBooks.length, screen.targetCount)} / {screen.targetCount}
+                </strong>
+              </div>
+              <div className="meter">
+                <div
+                  className="meter-fill"
+                  style={{
+                    width: `${(Math.min(collectedBooks.length, screen.targetCount) / screen.targetCount) * 100}%`,
+                  }}
+                />
+              </div>
+              <div className="books-grid">
+                {screen.books.map((book) => {
+                  const selected = collectedBooks.includes(book.id);
+                  return (
+                    <button
+                      className={`book-spine ${selected ? 'selected' : ''} ${book.isMagic ? 'magic' : 'plain'}`}
+                      key={book.id}
+                      onClick={() => onBookClick(book)}
+                      type="button"
+                    >
+                      {book.label}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="helper-text">
+                Нажимай на книжки со сказочным настроением. Обычные учебники и
+                справочники не дадут волшебной искры.
+              </p>
+              {miniGameComplete ? <div className="success-box">{screen.successText}</div> : null}
+            </div>
+          ) : null}
+
+          {screen.type === 'choice' ? (
+            <>
+              <div className="question-bubble">{screen.question}</div>
+              <div className="choice-grid">
+                {screen.options.map((option) => (
+                  <button
+                    className={`choice-card ${mealChoice === option.id ? 'selected' : ''}`}
+                    key={option.id}
+                    onClick={() => onMealChoose(option.id)}
+                    type="button"
+                  >
+                    <strong>{option.label}</strong>
+                    <span>{option.summary}</span>
+                  </button>
+                ))}
+              </div>
+            </>
+          ) : null}
+
+          {screen.type === 'ending' && mealBranch ? (
+            <div className="branch-box">
+              <strong>Итог выбранной ветки</strong>
+              <p>{mealBranch.lead}</p>
+              <p>{mealBranch.promise}</p>
+              <div className="mirror-note">
+                Волшебное зеркальце остается у Алешки и станет удобным игровым
+                элементом для подсказок в следующих главах.
+              </div>
+            </div>
+          ) : null}
+
+          {screen.type === 'ending' ? (
+            <div className="author-note">
+              <strong>Задел на продолжение</strong>
+              <p>
+                В следующей главе можно добавить выбор вещей, которые Алешка берет с
+                собой: например, "Юный инженер" или походную энциклопедию.
+              </p>
+            </div>
+          ) : null}
         </div>
       </div>
 
       <div className="page-surface page-surface-art">
         <IllustrationCard
-        label="Р—Р°РіР»СѓС€РєР° РёР»Р»СЋСЃС‚СЂР°С†РёРё"
-        description={screen.illustration}
-        accent={screen.type}
-      />
+          label="Заглушка иллюстрации"
+          description={screen.illustration}
+          accent={screen.type}
+        />
       </div>
     </article>
   );
