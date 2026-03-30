@@ -303,44 +303,19 @@ function App() {
         </main>
       ) : (
         <main className="reader-layout">
-          <aside className="reader-sidebar">
-            <div className="story-chip">Глава 1</div>
-            <h2>{chapter.title}</h2>
-            <p>
-              Простой формат для ребенка: листай вперед, назад и делай выбор там,
-              где история меняется.
-            </p>
-            <div className="progress-box">
-              <span>Экран</span>
-              <strong>
-                {progress.screenIndex + 1} / {chapter.screens.length}
-              </strong>
+          <section className="reader-stage">
+            <div className="reader-stage-top">
+              <button className="ghost-button" onClick={goToLibrary}>
+                Вернуться к книге
+              </button>
+              <div className="reader-stage-meta">
+                <span>Глава 1</span>
+                <span>
+                  Экран {progress.screenIndex + 1} / {chapter.screens.length}
+                </span>
+              </div>
             </div>
-            <div className="progress-box">
-              <span>Выбор</span>
-              <strong>{progress.mealChoice ? 'сделан' : 'пока нет'}</strong>
-            </div>
-            <div className="progress-box">
-              <span>Волшебство</span>
-              <strong>{progress.collectedBooks.length} книг</strong>
-            </div>
-            <div className="scene-track">
-              {chapter.screens.map((screen, index) => (
-                <button
-                  key={screen.id}
-                  type="button"
-                  className={`scene-dot ${index === progress.screenIndex ? 'active' : ''} ${index < progress.screenIndex ? 'seen' : ''}`}
-                  onClick={() => jumpToScreen(index)}
-                  aria-label={`Перейти к экрану ${index + 1}`}
-                />
-              ))}
-            </div>
-            <button className="secondary-button wide" onClick={restartChapter}>
-              Начать сначала
-            </button>
-          </aside>
 
-          <section className="screen-panel">
             <ScreenContent
               key={`${activeScreen.id}-${scenePulse}`}
               screen={activeScreen}
