@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { story } from './storyData.js';
 
 const STORAGE_KEY = 'aleshka-prototype-progress';
