@@ -194,18 +194,20 @@ function App() {
       <div className="ambient ambient-right" />
       <div className="ambient ambient-top" />
 
-      <header className="topbar">
-        <button className="ghost-button" onClick={goToLibrary}>
-          К книгам
-        </button>
-        <div className="topbar-title">
-          <span className="eyebrow">Прототип MVP</span>
-          <strong>{story.title}</strong>
-        </div>
-        <button className="ghost-button" onClick={toggleSound}>
-          {progress.soundOn ? 'Звук: вкл' : 'Звук: выкл'}
-        </button>
-      </header>
+      {view === 'library' ? (
+        <header className="topbar">
+          <button className="ghost-button" onClick={goToLibrary}>
+            К книгам
+          </button>
+          <div className="topbar-title">
+            <span className="eyebrow">Прототип MVP</span>
+            <strong>{story.title}</strong>
+          </div>
+          <button className="ghost-button" onClick={toggleSound}>
+            {progress.soundOn ? 'Звук: вкл' : 'Звук: выкл'}
+          </button>
+        </header>
+      ) : null}
 
       {view === 'library' ? (
         <main className="library-layout">
@@ -308,12 +310,6 @@ function App() {
               <button className="ghost-button" onClick={goToLibrary}>
                 Вернуться к книге
               </button>
-              <div className="reader-stage-meta">
-                <span>Глава 1</span>
-                <span>
-                  Экран {progress.screenIndex + 1} / {chapter.screens.length}
-                </span>
-              </div>
             </div>
 
             <ScreenContent

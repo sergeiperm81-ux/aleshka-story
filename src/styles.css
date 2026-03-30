@@ -337,7 +337,7 @@ button {
 }
 
 .reader-layout {
-  max-width: 1240px;
+  max-width: 1080px;
   margin: 0 auto;
   align-items: start;
   display: block;
@@ -350,26 +350,7 @@ button {
 
 .reader-stage-top {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  max-width: 1240px;
-}
-
-.reader-stage-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.reader-stage-meta span {
-  padding: 10px 12px;
-  border-radius: 999px;
-  background: rgba(255, 248, 238, 0.76);
-  border: 1px solid var(--line);
-  color: var(--ink-soft);
-  font-family: 'Trebuchet MS', Verdana, sans-serif;
-  font-size: 0.88rem;
+  justify-content: flex-start;
 }
 
 .wide {
@@ -380,11 +361,9 @@ button {
 .screen-card {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  grid-template-columns: 1fr;
   gap: 18px;
   padding: 20px;
-  transform-style: preserve-3d;
-  perspective: 1600px;
   overflow: hidden;
   background: rgba(255, 248, 238, 0.76);
 }
@@ -392,11 +371,14 @@ button {
 .page-surface {
   position: relative;
   min-width: 0;
-  min-height: 100%;
   padding: 28px;
   background: linear-gradient(180deg, rgba(255, 253, 246, 0.96), rgba(249, 237, 220, 0.9));
   border-radius: 24px;
   border: 1px solid rgba(96, 56, 38, 0.08);
+}
+
+.page-surface-art {
+  max-width: 420px;
 }
 
 .screen-enter.forward {
@@ -434,13 +416,13 @@ button {
 }
 
 .screen-copy h1 {
-  font-size: clamp(2.2rem, 3.4vw, 3.8rem);
-  line-height: 0.98;
-  max-width: 12ch;
+  font-size: clamp(2.2rem, 3vw, 3.2rem);
+  line-height: 1;
+  max-width: 16ch;
 }
 
 .screen-copy p {
-  max-width: 34rem;
+  max-width: 44rem;
   font-size: 1.12rem;
 }
 
@@ -576,7 +558,7 @@ button {
 
 .illustration-card {
   position: relative;
-  min-height: 420px;
+  min-height: 340px;
   overflow: hidden;
   border-radius: 30px;
   background:
@@ -764,8 +746,7 @@ button {
   }
 
   .reader-stage-top {
-    flex-direction: column;
-    align-items: stretch;
+    justify-content: flex-start;
   }
 }
 
