@@ -97,12 +97,18 @@ body::before {
   height: 4px;
   border-radius: 2px;
   background: rgba(255,255,255,.12);
-  transition: background .3s;
+  transition: background .2s, transform .15s;
+  cursor: pointer;
+  position: relative;
 }
+.prog-dot:hover { background: rgba(255,255,255,.35); transform: scaleY(2.2); }
 .prog-dot.vis  { background: rgba(201,162,39,.75); }
-.prog-dot.cur  { background: var(--gold); }
+.prog-dot.vis:hover { background: rgba(201,162,39,1); }
+.prog-dot.cur  { background: var(--gold); transform: scaleY(2.5); cursor: default; }
+.prog-dot.cur:hover { transform: scaleY(2.5); }
 .prog-dot.ch2  { background: rgba(30,138,122,.4); }
 .prog-dot.ch2.vis { background: rgba(30,138,122,.8); }
+.prog-dot.ch2.vis:hover { background: rgba(30,138,122,1); }
 .prog-dot.ch2.cur { background: #2ed4c0; }
 
 /* ── screens wrapper ── */
@@ -979,7 +985,8 @@ function renderTop() {
     if (sc.ch2) c += ' ch2';
     if (i === S.cur) c += ' cur';
     else if (S.visited.has(i)) c += ' vis';
-    return '<div class="'+c+'"></div>';
+    var label = sc.toc.replace(/^[⚡🔧🍁]\s*/, '');
+    return '<div class="'+c+'" onclick="go('+i+')" title="'+label+'"></div>';
   }).join('');
 }
 
@@ -1109,7 +1116,7 @@ function buildTools(i) {
   var toolsHTML = TOOLS.map(function(t) {
     var cls = 'tool-card';
     if (ch === t.id) cls += t.correct ? ' chosen-right' : ' chosen-wrong';
-    return '<div class="'+cls+'" onclick="pickTool(\''+t.id+'\')">'
+    return '<div class="'+cls+'" id="tc-'+t.id+'" onclick="pickTool(\''+t.id+'\')">'
       + '<span class="tool-emoji">'+t.emoji+'</span>'
       + '<div class="tool-name">'+t.name+'</div>'
       + '<div class="tool-hint">'+t.hint+'</div>'
@@ -1125,11 +1132,11 @@ function buildTools(i) {
     + '<p class="dialog">— Хорошо! А теперь перейдём к проверке! Я хочу быть уверен, что ты умеешь решать задачи. Выбери то, что поможет тебе в путешествии. Подсказка: сегодня это тебе уже помогло!</p>'
     + '</div>'
     + '<div class="tool-grid">'+toolsHTML+'</div>'
-    + '<div class="tool-result">'+resText+'</div>'
+    + '<div id="toolResult" class="tool-result">'+resText+'</div>'
     + '</div>'
     + '<div class="nav-bar">'
     + '<button class="btn btn-back" onclick="go('+(i-1)+')">← Назад</button>'
-    + '<button class="btn btn-main" onclick="go('+(i+1)+')" '+(done?'':'disabled')+'>Дальше&nbsp;→</button>'
+    + '<button id="toolNextBtn" class="btn btn-main" onclick="go('+(i+1)+')" '+(done?'':'disabled')+'>Дальше&nbsp;→</button>'
     + '<button class="btn btn-toc" onclick="tocOpen()">☰</button>'
     + '</div>'
     + '</div>';
@@ -1276,7 +1283,23 @@ function clickBook(name, gi) {
 
 function pickTool(id) {
   S.toolChosen = id;
-  render();
+  var correct = id === 'kit';
+  // Update card styles without re-render
+  TOOLS.forEach(function(t) {
+    var el = document.getElementById('tc-'+t.id);
+    if (!el) return;
+    el.className = 'tool-card' + (id === t.id ? (t.correct ? ' chosen-right' : ' chosen-wrong') : '');
+  });
+  // Update result text
+  var res = document.getElementById('toolResult');
+  if (res) res.textContent = correct
+    ? '— Отлично! — воскликнул Волшебник. — Умный мальчишка! Именно этот набор и пригодится тебе в Волшебной стране!'
+    : '— Хм… — покачал головой Волшебник. — Подумай ещё раз! Тебе нужно то, что уже помогло тебе сегодня вечером…';
+  // Enable next button
+  if (correct) {
+    var btn = document.getElementById('toolNextBtn');
+    if (btn) btn.removeAttribute('disabled');
+  }
 }
 
 function clickLeaf(id, maple) {
