@@ -402,34 +402,52 @@ body::before {
 }
 .book-cover {
   flex: 1;
-  border-radius: 7px;
+  border-radius: 2px 5px 5px 2px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px 6px 8px;
-  min-height: 100px;
+  padding: 12px 10px 10px 18px;
+  min-height: 120px;
   text-align: center;
   user-select: none;
   transition: transform .2s, box-shadow .2s;
-  box-shadow: 2px 3px 8px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.1);
+  box-shadow: 3px 4px 12px rgba(0,0,0,.65), inset -2px 0 5px rgba(0,0,0,.2);
   position: relative;
   overflow: hidden;
 }
+/* Корешок книги слева */
+.book-cover::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 10px;
+  background: rgba(0,0,0,.32);
+  border-right: 1px solid rgba(255,255,255,.1);
+}
+/* Края страниц справа */
+.book-cover::after {
+  content: '';
+  position: absolute;
+  top: 3px; right: 0; bottom: 3px;
+  width: 5px;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255,255,255,.18) 0px,
+    rgba(255,255,255,.18) 1px,
+    rgba(200,175,140,.08) 1px,
+    rgba(200,175,140,.08) 3px
+  );
+  border-left: 1px solid rgba(255,255,255,.07);
+}
 .book-cover:not(.found):hover {
-  transform: translateY(-6px) scale(1.04);
-  box-shadow: 2px 12px 20px rgba(0,0,0,.6);
+  transform: translateY(-7px) scale(1.05);
+  box-shadow: 4px 14px 26px rgba(0,0,0,.75);
 }
 .book-cover.found {
-  box-shadow: 0 0 0 2px var(--gold), 0 0 20px rgba(240,208,96,.6);
+  box-shadow: 0 0 0 2px var(--gold), 0 0 22px rgba(240,208,96,.6);
   cursor: default;
-}
-.book-cover.found::after {
-  content: '✨';
-  position: absolute;
-  top: 4px; right: 5px;
-  font-size: 12px;
 }
 .book-cover.wrong { animation: shk .35s; }
 @keyframes shk {
@@ -437,7 +455,13 @@ body::before {
   25%      { transform: translateX(-5px) rotate(-2deg); }
   75%      { transform: translateX(5px) rotate(2deg); }
 }
-.book-icon { font-size: 22px; margin-bottom: 5px; }
+.book-star {
+  position: absolute;
+  top: 3px; right: 8px;
+  font-size: 13px;
+  z-index: 1;
+}
+.book-icon { font-size: 24px; margin-bottom: 6px; position: relative; z-index: 1; }
 .book-title {
   font-size: 11px;
   color: rgba(255,255,255,.95);
@@ -445,6 +469,8 @@ body::before {
   line-height: 1.3;
   font-weight: 600;
   word-break: break-word;
+  text-shadow: 0 1px 3px rgba(0,0,0,.6);
+  position: relative; z-index: 1;
 }
 
 /* ══════════════════════════════════════════
@@ -1031,10 +1057,10 @@ function buildBookshelf(i) {
     var st    = 'background:'+BOOK_COLORS[gi]+';';
     var icon  = BOOK_ICONS[gi];
     var isFnd = S.booksFound.has(name);
-    var star  = isFnd ? '<div style="position:absolute;top:4px;right:5px;font-size:12px;">✨</div>' : '';
+    var star  = isFnd ? '<div class="book-star">✨</div>' : '';
     var cls   = 'book-cover'+(isFnd?' found':'');
     var click = isFnd ? '' : ' onclick="clickBook(\''+name+'\','+gi+')"';
-    var idAttr = isFnd ? '' : ' id="bk'+gi+'"';
+    var idAttr = ' id="bk'+gi+'"';
     return '<div class="'+cls+'"'+idAttr+' style="'+st+'"'+click+'>'
       + star
       + '<div class="book-icon">'+icon+'</div>'
@@ -1049,8 +1075,8 @@ function buildBookshelf(i) {
     + '<div style="padding:16px 20px 6px;flex-shrink:0;">'
     + '<div class="game-intro">— Ты разве не знаешь, что на страницах любой книжки со сказками всегда остаётся немножечко волшебства? Найди для меня пять нужных книжек!</div>'
     + '<div class="magic-bar-wrap">'
-    + '<div class="magic-bar-label"><span>✨ Волшебство</span><span>'+found+'&nbsp;из&nbsp;5</span></div>'
-    + '<div class="magic-bar"><div class="magic-fill" style="width:'+pct+'%"></div></div>'
+    + '<div class="magic-bar-label"><span>✨ Волшебство</span><span id="bkCount">'+found+'&nbsp;из&nbsp;5</span></div>'
+    + '<div class="magic-bar"><div class="magic-fill" id="bkFill" style="width:'+pct+'%"></div></div>'
     + '</div>'
     + '<div class="book-feed" id="bkFeed">'+S.bookFeed+'</div>'
     + '</div>'
@@ -1061,14 +1087,14 @@ function buildBookshelf(i) {
     + '<div class="shelf-plank">'+row2+'</div>'
     + '</div>'
     + '<div style="text-align:center;padding:8px 0 0;flex-shrink:0;">'
-    + '<span style="font-size:13px;color:#a08060;font-family:Arial,sans-serif;font-style:italic;">'
+    + '<span id="bkHint" style="font-size:13px;color:#a08060;font-family:Arial,sans-serif;font-style:italic;">'
     + (done ? '🌟&nbsp;Все пять волшебных книжек найдены!' : 'Нажимай на книжки — ищи волшебные!')
     + '</span>'
     + '</div>'
     + '</div>'
     + '<div class="nav-bar">'
     + '<button class="btn btn-back" onclick="go('+(i-1)+')">← Назад</button>'
-    + '<button class="btn btn-main" onclick="go('+(i+1)+')" '+(done?'':'disabled')+'>Дальше&nbsp;→</button>'
+    + '<button id="bkNextBtn" class="btn btn-main" onclick="go('+(i+1)+')" '+(done?'':'disabled')+'>Дальше&nbsp;→</button>'
     + '<button class="btn btn-toc" onclick="tocOpen()">☰</button>'
     + '</div>'
     + '</div>';
@@ -1159,22 +1185,22 @@ function buildLeafGame(i) {
     + '<div style="padding:16px 20px 6px;flex-shrink:0;">'
     + '<div class="leaf-intro">— Тебе нужно найти семь кленовых листьев: Матушка Веда очень любит клёны, и в Волшебной стране они растут только возле её хижины!</div>'
     + '<div class="leaf-bar-wrap">'
-    + '<div class="leaf-bar-label"><span>🍁 Кленовые листья</span><span>'+found+'&nbsp;из&nbsp;7</span></div>'
-    + '<div class="leaf-bar"><div class="leaf-fill" style="width:'+pct+'%"></div></div>'
+    + '<div class="leaf-bar-label"><span>🍁 Кленовые листья</span><span id="lfCount">'+found+'&nbsp;из&nbsp;7</span></div>'
+    + '<div class="leaf-bar"><div class="leaf-fill" id="lfFill" style="width:'+pct+'%"></div></div>'
     + '</div>'
     + '<div class="leaf-feed" id="lfFeed">'+S.leafFeed+'</div>'
     + '</div>'
     + '<div style="flex:1;overflow-y:auto;padding:0 20px 12px;">'
     + '<div class="leaf-pile">'+leavesHTML+'</div>'
     + '<div style="text-align:center;padding:10px 0 0;">'
-    + '<span style="font-size:13px;color:#7a6040;font-family:Arial,sans-serif;font-style:italic;">'
+    + '<span id="lfHint" style="font-size:13px;color:#7a6040;font-family:Arial,sans-serif;font-style:italic;">'
     + (done ? '🌟&nbsp;Все семь кленовых листьев собраны!' : 'Нажимай на листья — ищи кленовые!')
     + '</span>'
     + '</div>'
     + '</div>'
     + '<div class="nav-bar">'
     + '<button class="btn btn-back" onclick="go('+(i-1)+')">← Назад</button>'
-    + '<button class="btn btn-main ch2" onclick="go('+(i+1)+')" '+(done?'':'disabled')+'>Дальше&nbsp;→</button>'
+    + '<button id="lfNextBtn" class="btn btn-main ch2" onclick="go('+(i+1)+')" '+(done?'':'disabled')+'>Дальше&nbsp;→</button>'
     + '<button class="btn btn-toc" onclick="tocOpen()">☰</button>'
     + '</div>'
     + '</div>';
@@ -1214,16 +1240,36 @@ function go(i) {
 
 function clickBook(name, gi) {
   if (S.booksFound.has(name)) return;
+  var el = document.getElementById('bk'+gi);
   if (MAGIC_BOOKS.indexOf(name) !== -1) {
     S.booksFound.add(name);
-    S.bookFeed = S.booksFound.size===5
-      ? '🌟 Все пять волшебных книжек найдены!'
-      : '✨ «'+name+'» — волшебная! Нашёл!';
-    render();
+    var n = S.booksFound.size;
+    var feedText = n===5 ? '🌟 Все пять волшебных книжек найдены!' : '✨ «'+name+'» — волшебная! Нашёл!';
+    S.bookFeed = feedText;
+    var feed = document.getElementById('bkFeed');
+    if (feed) feed.textContent = feedText;
+    var fill = document.getElementById('bkFill');
+    if (fill) fill.style.width = Math.round(n/5*100)+'%';
+    var cnt = document.getElementById('bkCount');
+    if (cnt) cnt.innerHTML = n+'&nbsp;из&nbsp;5';
+    var hint = document.getElementById('bkHint');
+    if (hint) hint.innerHTML = n===5 ? '🌟&nbsp;Все пять волшебных книжек найдены!' : 'Нажимай на книжки — ищи волшебные!';
+    if (el) {
+      el.classList.add('found');
+      el.removeAttribute('onclick');
+      var star = document.createElement('div');
+      star.className = 'book-star';
+      star.textContent = '✨';
+      el.insertBefore(star, el.firstChild);
+    }
+    if (n===5) {
+      var btn = document.getElementById('bkNextBtn');
+      if (btn) btn.removeAttribute('disabled');
+    }
   } else {
     S.bookFeed = '«'+name+'» — нет, не та…';
-    render();
-    var el = document.getElementById('bk'+gi);
+    var feed = document.getElementById('bkFeed');
+    if (feed) feed.textContent = S.bookFeed;
     if (el) { el.classList.add('wrong'); setTimeout(function(){ el.classList.remove('wrong'); },380); }
   }
 }
@@ -1237,13 +1283,27 @@ function clickLeaf(id, maple) {
   if (S.leavesFound.has(id)) return;
   if (maple) {
     S.leavesFound.add(id);
-    S.leafFeed = S.leavesFound.size===7
-      ? '🌟 Все семь кленовых листьев собраны!'
-      : '🍁 Кленовый! Найден! ('+S.leavesFound.size+' из 7)';
-    render();
+    var n = S.leavesFound.size;
+    var feedText = n===7 ? '🌟 Все семь кленовых листьев собраны!' : '🍁 Кленовый! Найден! ('+n+' из 7)';
+    S.leafFeed = feedText;
+    var feed = document.getElementById('lfFeed');
+    if (feed) feed.textContent = feedText;
+    var fill = document.getElementById('lfFill');
+    if (fill) fill.style.width = Math.round(n/7*100)+'%';
+    var cnt = document.getElementById('lfCount');
+    if (cnt) cnt.innerHTML = n+'&nbsp;из&nbsp;7';
+    var hint = document.getElementById('lfHint');
+    if (hint) hint.innerHTML = n===7 ? '🌟&nbsp;Все семь кленовых листьев собраны!' : 'Нажимай на листья — ищи кленовые!';
+    var el = document.getElementById(id);
+    if (el) { el.classList.add('picked'); el.removeAttribute('onclick'); }
+    if (n===7) {
+      var btn = document.getElementById('lfNextBtn');
+      if (btn) btn.removeAttribute('disabled');
+    }
   } else {
     S.leafFeed = 'Нет, это не клён…';
-    render();
+    var feed = document.getElementById('lfFeed');
+    if (feed) feed.textContent = S.leafFeed;
   }
 }
 
