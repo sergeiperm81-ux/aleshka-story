@@ -101,9 +101,6 @@ body::before {
 }
 .prog-dot.vis  { background: rgba(201,162,39,.75); }
 .prog-dot.cur  { background: var(--gold); }
-.prog-dot.ch2  { background: rgba(30,138,122,.4); }
-.prog-dot.ch2.vis { background: rgba(30,138,122,.8); }
-.prog-dot.ch2.cur { background: #2ed4c0; }
 
 /* ── screens wrapper ── */
 #screens {
@@ -167,11 +164,14 @@ body::before {
 }
 .illus-ph .ph-icon { font-size: 36px; opacity: .6; }
 
+/* Scene illustration container */
 .illus-scene {
   width: 100%; height: 100%;
   position: relative;
   overflow: hidden;
 }
+
+/* Scene caption overlay */
 .scene-caption {
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -213,6 +213,7 @@ body::before {
 .story-text p:last-child { margin-bottom: 0; }
 .dialog { font-style: italic; color: var(--brown2); }
 
+/* Chapter header inside scroll area */
 .chapter-head {
   font-size: 11px;
   font-family: Arial, sans-serif;
@@ -224,14 +225,12 @@ body::before {
   align-items: center;
   gap: 8px;
 }
-.chapter-head.ch2 { color: rgba(30,138,122,.6); }
 .chapter-head::after {
   content: '';
   flex: 1;
   height: 1px;
   background: rgba(107,53,201,.15);
 }
-.chapter-head.ch2::after { background: rgba(30,138,122,.2); }
 
 /* ── fixed nav bar ── */
 .nav-bar {
@@ -264,10 +263,6 @@ body::before {
   box-shadow: 0 3px 12px var(--shadow);
 }
 .btn-main:hover { box-shadow: 0 4px 18px rgba(107,53,201,.4); }
-.btn-main.ch2 {
-  background: #0e3d38;
-  color: #7ffff4;
-}
 .btn-back {
   background: #e8dcc8;
   color: var(--brown);
@@ -286,6 +281,16 @@ body::before {
 ══════════════════════════════════════════ */
 #sc0 {
   background: radial-gradient(ellipse 120% 100% at 30% 60%, #2a1060 0%, #0d0a1e 70%);
+}
+.cover-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px 36px;
+  background: transparent;
 }
 .cover-title {
   font-size: clamp(22px, 3.8vw, 32px);
@@ -308,6 +313,14 @@ body::before {
   letter-spacing: 3px;
   text-transform: uppercase;
 }
+.cover-tagline {
+  font-size: 12px;
+  color: rgba(201,162,39,.35);
+  font-family: Arial, sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
 .btn-start {
   background: linear-gradient(135deg, var(--gold) 0%, #e8b830 100%);
   color: var(--ink);
@@ -326,7 +339,44 @@ body::before {
 .btn-start:active { transform: scale(.97); }
 
 /* ══════════════════════════════════════════
-   BOOKSHELF GAME
+   BACKSTORY SLIDES
+══════════════════════════════════════════ */
+.bslide { display: none; }
+.bslide.active { display: block; }
+.bs-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+.bs-badge {
+  background: linear-gradient(135deg, var(--magic), var(--magic2));
+  color: #fff;
+  font-size: 11px;
+  font-family: Arial, sans-serif;
+  padding: 4px 10px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+.bs-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+.bdot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #e0d4c0;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.bdot.active { background: var(--ink); transform: scale(1.2); }
+
+/* ══════════════════════════════════════════
+   BOOKSHELF GAME — book covers with horizontal titles
 ══════════════════════════════════════════ */
 .game-intro {
   font-size: 16px;
@@ -381,6 +431,8 @@ body::before {
   margin: 5px 0 6px;
   font-family: Arial, sans-serif;
 }
+
+/* Book cover grid */
 .shelf-cabinet {
   background: linear-gradient(180deg, #2a1205 0%, #4a2010 100%);
   border-radius: 12px;
@@ -393,6 +445,7 @@ body::before {
   margin-bottom: 10px;
 }
 .shelf-plank:last-child { margin-bottom: 0; }
+/* wooden shelf line between rows */
 .shelf-divider {
   height: 6px;
   background: linear-gradient(180deg, #8a4818, #5a2e0c);
@@ -448,15 +501,21 @@ body::before {
 }
 
 /* ══════════════════════════════════════════
-   TOOL SELECTION
+   MEAL CHOICE
 ══════════════════════════════════════════ */
-.tool-grid {
+.meal-q {
+  font-size: 17px;
+  font-weight: bold;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.meal-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
   margin-bottom: 14px;
 }
-.tool-card {
+.meal-card {
   border: 3px solid #e0d4c0;
   border-radius: 18px;
   padding: 18px 12px;
@@ -465,13 +524,12 @@ body::before {
   background: #fff;
   transition: border-color .2s, transform .15s, box-shadow .2s;
 }
-.tool-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow); }
-.tool-card.chosen-right { border-color: #2a7a40; background: #f0f8f2; box-shadow: 0 4px 16px rgba(42,122,64,.2); }
-.tool-card.chosen-wrong { border-color: #c03030; background: #fff5f5; }
-.tool-emoji { font-size: 46px; display: block; margin-bottom: 10px; }
-.tool-name { font-size: 15px; font-weight: bold; color: var(--ink); margin-bottom: 4px; line-height: 1.3; }
-.tool-hint { font-size: 12px; color: #888; font-family: Arial, sans-serif; }
-.tool-result {
+.meal-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow); }
+.meal-card.chosen { border-color: var(--ink); background: #f0eef8; box-shadow: 0 4px 16px rgba(30,20,51,.15); }
+.meal-emoji { font-size: 46px; display: block; margin-bottom: 10px; }
+.meal-name { font-size: 15px; font-weight: bold; color: var(--ink); margin-bottom: 4px; line-height: 1.3; }
+.meal-hint { font-size: 12px; color: #888; font-family: Arial, sans-serif; }
+.meal-result {
   min-height: 26px;
   font-size: 15px;
   font-style: italic;
@@ -482,102 +540,7 @@ body::before {
 }
 
 /* ══════════════════════════════════════════
-   LEAF GAME
-══════════════════════════════════════════ */
-.leaf-intro {
-  font-size: 16px;
-  font-style: italic;
-  color: var(--brown2);
-  line-height: 1.7;
-  margin-bottom: 12px;
-  padding: 12px 16px;
-  background: rgba(30,138,122,.07);
-  border-left: 3px solid var(--teal);
-  border-radius: 0 8px 8px 0;
-}
-.leaf-bar-wrap { margin-bottom: 8px; }
-.leaf-bar-label {
-  font-size: 13px;
-  font-family: Arial, sans-serif;
-  color: var(--brown);
-  margin-bottom: 5px;
-  display: flex;
-  justify-content: space-between;
-}
-.leaf-bar {
-  height: 14px;
-  background: #e8dcc8;
-  border-radius: 7px;
-  overflow: hidden;
-}
-.leaf-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #2e8a50, #a0d060);
-  border-radius: 7px;
-  transition: width .6s cubic-bezier(.34,1.56,.64,1);
-}
-.leaf-feed {
-  min-height: 24px;
-  text-align: center;
-  font-size: 15px;
-  font-style: italic;
-  color: var(--brown2);
-  margin: 5px 0 6px;
-  font-family: Arial, sans-serif;
-}
-.leaf-pile {
-  background: linear-gradient(180deg, #2a1a08 0%, #1a1208 100%);
-  border-radius: 12px;
-  padding: 14px;
-  box-shadow: 0 6px 20px rgba(0,0,0,.4);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-}
-.leaf-item {
-  border-radius: 12px;
-  cursor: pointer;
-  padding: 10px 14px;
-  text-align: center;
-  user-select: none;
-  transition: transform .2s, box-shadow .2s, opacity .3s;
-  background: rgba(255,255,255,.06);
-  border: 2px solid rgba(255,255,255,.1);
-  font-size: 13px;
-  font-family: Arial, sans-serif;
-  color: rgba(255,255,255,.85);
-  min-width: 80px;
-}
-.leaf-item:not(.picked):hover {
-  transform: translateY(-4px) scale(1.06);
-  box-shadow: 0 8px 18px rgba(0,0,0,.5);
-}
-.leaf-item.picked {
-  box-shadow: 0 0 0 2px #a0d060, 0 0 16px rgba(160,208,96,.5);
-  cursor: default;
-  opacity: .6;
-}
-.leaf-item.picked::after { content: ' ✓'; color: #a0d060; }
-.leaf-item .l-icon { font-size: 26px; display: block; margin-bottom: 4px; }
-.leaf-item .l-name { font-size: 11px; opacity: .7; }
-
-/* ══════════════════════════════════════════
-   CHAPTER 2 COVER
-══════════════════════════════════════════ */
-.ch2-cover-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 32px 36px;
-  background: radial-gradient(ellipse 120% 100% at 50% 60%, #0d3028 0%, #071820 70%);
-}
-
-/* ══════════════════════════════════════════
-   END SCREENS
+   END SCREEN
 ══════════════════════════════════════════ */
 .end-body {
   flex: 1;
@@ -591,7 +554,6 @@ body::before {
   position: relative;
   overflow: hidden;
 }
-.end-body.ch2 { background: linear-gradient(160deg, #0a2820 0%, #071818 100%); }
 .end-stars { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .end-star {
   position: absolute;
@@ -601,15 +563,12 @@ body::before {
   opacity: .5;
   animation: twinkle var(--d) ease-in-out infinite var(--dl);
 }
-.end-body.ch2 .end-star { background: #7ffff4; }
 @keyframes twinkle {
   0%,100% { opacity: .15; }
   50%      { opacity: .7; }
 }
 .end-icon  { font-size: 58px; margin-bottom: 16px; filter: drop-shadow(0 0 20px var(--gold)); }
-.end-body.ch2 .end-icon { filter: drop-shadow(0 0 20px #2ed4c0); }
 .end-title { font-size: 26px; color: var(--gold-lt); font-weight: bold; margin-bottom: 12px; }
-.end-body.ch2 .end-title { color: #7ffff4; }
 .end-hint  { font-size: 17px; color: rgba(255,255,255,.75); line-height: 1.7; margin-bottom: 30px; max-width: 400px; }
 .btn-restart {
   background: linear-gradient(135deg, var(--gold) 0%, #e8b830 100%);
@@ -639,9 +598,13 @@ body::before {
   0%,100% { transform: scale(1);   opacity: .7; }
   50%      { transform: scale(1.1); opacity: .3; }
 }
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
 
 /* ══════════════════════════════════════════
-   MOBILE
+   MOBILE — stack layout
 ══════════════════════════════════════════ */
 @media (max-width: 639px) {
   .pane-illus { width: 100%; height: 200px; flex-shrink: 0; }
@@ -685,15 +648,6 @@ body::before {
 }
 .toc-row:hover { background: #f0e8d8; }
 .toc-row.cur   { background: var(--ink); color: var(--gold-lt); }
-.toc-sep {
-  font-size: 11px;
-  font-family: Arial, sans-serif;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--teal);
-  padding: 10px 10px 4px;
-  opacity: .7;
-}
 .toc-num {
   width: 26px; height: 26px;
   border-radius: 50%;
@@ -711,6 +665,7 @@ body::before {
   font-family: Georgia, serif; cursor: pointer;
 }
 
+/* ── full-width screens ── */
 .full-screen-wrap {
   flex: 1;
   display: flex;
@@ -722,7 +677,7 @@ body::before {
 <body>
 <div id="app">
   <div id="topBar">
-    <span class="prog-label" id="progLabel">1/24</span>
+    <span class="prog-label" id="progLabel">1/14</span>
     <div class="prog-chaps" id="progDots"></div>
   </div>
   <div id="screens"></div>
@@ -740,167 +695,88 @@ body::before {
 // ────────────────────────────────────────────
 // DATA
 // ────────────────────────────────────────────
-var CH2 = 14; // index where chapter 2 begins (screen 'wall')
-
 const SCREENS = [
-  // ── ГЛАВА 1 ──────────────────────────────
   { id:'cover',     type:'cover',     toc:'Обложка' },
   {
     id:'intro', type:'story', toc:'Начало истории',
+    illus:{ bg:'linear-gradient(160deg,#1e5a3a,#0d3020)', ph:'🌿', label:'Волшебная книга' },
     text:`<p>Говорят, что попасть в сказку — это сложно!</p>
           <p>На самом деле, это не так! Порой достаточно просто свернуть с привычного пути, чтобы оказаться в самой настоящей сказке. А иногда сказка приходит к нам сама — просто мы не всегда обращаем на это внимание. Хорошо, что у нашего героя получилось!</p>
           <p>Впрочем, давайте обо всём по порядку.</p>`
   },
   {
-    id:'home', type:'story', toc:'Фил дома',
-    img:'3e51266e-72de-4602-acee-ad76597d4c76.jfif',
-    text:`<p>Наша история началась обычным пятничным вечером: родители Фила как обычно уехали в театр, и он на весь вечер остался за главного в доме.</p>
-          <p>Сначала он выпил чаю с шоколадной пастой, потом стащил две конфеты из шкафа на кухне, который вроде бы и был закрыт на ключ, но Фил давно научился открывать его отвёрткой из набора «Маленький мастер».</p>
+    id:'home', type:'story', toc:'Алёшка дома',
+    illus:{ img:'3e51266e-72de-4602-acee-ad76597d4c76.jfif', bg:'linear-gradient(160deg,#7a3a1a,#3d1e0a)', ph:'🏠', label:'Алёшка в своей комнате' },
+    text:`<p>Наша история началась обычным пятничным вечером: родители Алёшки как обычно уехали в театр, и он на весь вечер остался за главного в доме.</p>
+          <p>Сначала он выпил чаю с шоколадной пастой, потом стащил две конфеты из серванта, который вроде бы и был закрыт на ключ, но Алёшка давно научился открывать его отвёрткой из набора «Юный инженер».</p>
           <p>А потом он сел было за планшет, чтобы поиграть в любимую игру, как вдруг услышал тихий плач.</p>`
   },
   {
     id:'wardrobe', type:'story', toc:'Странный шкаф',
-    text:`<p>«Показалось!» — подумал Фил. Но только он уселся поудобнее, как снова услышал тихие всхлипывания, которые доносились из гардероба.</p>
-          <p>Может быть, кто-то на месте Фила в этот момент испугался. Но ему это даже в голову не пришло. Поэтому мальчишка подскочил к шкафу, распахнул дверцы и увидел…</p>`
+    illus:{ bg:'linear-gradient(160deg,#1a2a5a,#0d1530)', ph:'🚪', label:'Алёшка открывает шкаф' },
+    text:`<p>«Показалось!» — подумал Алёшка. Но только он уселся поудобнее, как снова услышал тихие всхлипывания, которые доносились из большого одёжного шкафа.</p>
+          <p>Может быть, кто-то на месте Алёшки в этот момент испугался. Но ему это даже в голову не пришло. Поэтому мальчишка подскочил к шкафу, распахнул дверцы и увидел…</p>`
   },
   {
     id:'wizard', type:'story', toc:'Волшебник в шкафу',
-    img:'9769fdb2-b295-40f9-a894-8771c9380e31.jfif',
+    illus:{ img:'9769fdb2-b295-40f9-a894-8771c9380e31.jfif', bg:'linear-gradient(160deg,#3a1060,#1a0840)', ph:'🧙', label:'Алёшка и Волшебник' },
     text:`<p>Маленького — не больше игрушечного солдатика — человечка, который сидел в самом тёмном углу шкафа и горько плакал.</p>
-          <p class="dialog">— А что это ты делаешь в нашем гардеробе? — спросил Фил.</p>
+          <p class="dialog">— А что это ты делаешь в моём шкафу? — спросил Алёшка.</p>
           <p class="dialog">— Разве не видишь? — буркнул человечек. — Сижу и плачу.</p>
-          <p class="dialog">— А почему именно этот шкаф? Нельзя поплакать где-то в другом месте?</p>
-          <p class="dialog">— А я и не выбирал! — огрызнулся человечек. — Это Пыльная ведьма меня сюда выкинула!</p>
+          <p class="dialog">— А почему именно мой шкаф? Нельзя поплакать где-то в другом месте?</p>
+          <p class="dialog">— А я и не выбирал! — огрызнулся человечек. — Это Пылевая ведьма меня сюда выкинула!</p>
           <p class="dialog">— И ты кто, вообще, такой?</p>
           <p class="dialog">— Я волшебник, — спокойно ответил маленький человечек. — Добрый волшебник. И если ты поможешь мне выбраться, я расскажу тебе всё.</p>`
   },
   {
     id:'backstory', type:'story', toc:'История Волшебной страны',
-    text:`<p>Давным-давно Добрый волшебник устал от шума и серости больших городов и решил создать свой собственный мир. Он достал Волшебную книгу и спросил: «Как сделать Волшебную страну, похожую на огромный сад?» Книга открылась на нужном развороте.</p>
-          <p>Волшебник собрал семена самых красивых цветов и растений со всей Земли, а ещё целое лукошко каштанов, желудей и орехов. Из них он сделал маленьких человечков-садовников. Так и получилась Волшебная страна, в которой все жили в любви и согласии.</p>
-          <p>Но беда пришла откуда не ждали. Волшебник очень торопился — такие вот они, творческие люди! — и к его ботинкам прилипла грязь из большого города, заражённая вирусом зависти. Она рассохлась, разлетелась по стране и смешалась с пылью в домах ленивых жителей. Вот так из зависти, лени и грязи родилась Пыльная ведьма.</p>
-          <p>Однажды ночью она прокралась в башню и открыла Волшебную книгу. «Как избавиться от Доброго Волшебника?» — спросила ведьма. Книга неохотно открылась, ведьма произнесла желание — и довольно расхохоталась!</p>`
+    illus:{ bg:'linear-gradient(160deg,#0a3040,#071828)', ph:'🗺' },
+    text:`<p>Давным-давно Добрый волшебник устал от шума и серости больших городов и решил создать свой собственный мир. Он достал свою Волшебную книгу и спросил: «Как сделать Волшебную страну, которая будет похожа на огромный сад?» Книга пошелестела страницами и открылась на нужном развороте.</p>
+          <p>Волшебник собрал семена самых красивых цветов и растений со всей Земли, а ещё целое лукошко каштанов и желудей. Из них — тут снова помогла Волшебная книга — он сделал маленьких человечков-садовников, которые ухаживали за растениями. Так и получилась Волшебная страна, в которой все жили счастливо. Пока не случилась беда!</p>
+          <p>Дело в том, что Волшебник очень торопился и плохо почистил ботинки. Немного грязи забилась в угол его башни и постепенно набирала силу. В какой-то момент из неё получилась Пылевая ведьма, которой очень не нравились счастливые лица обитателей Волшебной страны.</p>
+          <p>Однажды ночью она прокралась в башню и открыла Волшебную книгу. «Как мне избавиться от Доброго Волшебника?» — спросила ведьма. Книга неохотно открылась на нужной странице. Ведьма положила ладонь и произнесла желание!</p>
+          <p class="dialog">— Вот так я и оказался в твоём шкафу! — вздохнул Волшебник.</p>`
   },
   {
     id:'plan', type:'story', toc:'Что делать?',
-    img:'9769fdb2-b295-40f9-a894-8771c9380e31.jfif',
-    text:`<p class="dialog">— Вот так я и оказался в вашем гардеробе! — вздохнул Волшебник.</p>
-          <p class="dialog">— Ну и растяпа же ты, Волшебник! — покачал головой Фил. — Надо было пароль поставить, это даже дети знают!</p>
-          <p class="dialog">— Когда-то все шкафы были порталами в волшебные страны, вот меня и притянуло к ближайшему.</p>
-          <p class="dialog">— А что собираешься делать дальше?</p>
-          <p class="dialog">— Сам я спасти Волшебную страну не смогу — заклинание Пыльной ведьмы не даст мне вернуться. Но вот если бы мне кто-то помог…</p>`
+    illus:{ bg:'linear-gradient(160deg,#3a1060,#1a0840)', ph:'🧙', label:'Алёшка и Волшебник' },
+    text:`<p class="dialog">— Ну и растяпа же ты, Волшебник! — покачал головой Алёшка. — Надо же было пароль какой-то поставить, это даже дети знают!</p>
+          <p class="dialog">— Когда-то все шкафы были порталами в разные волшебные страны, вот меня и притянуло к ближайшему.</p>
+          <p class="dialog">— А что ты собираешься делать дальше?</p>
+          <p class="dialog">— Сам я спасти Волшебную страну не смогу! — грустно вздохнул Добрый Волшебник. — Заклинание Пылевой ведьмы не даст мне вернуться. Но вот если бы мне кто-то помог…</p>`
   },
   {
     id:'time', type:'story', toc:'Дело со временем',
-    text:`<p>Фил быстро сложил в голове два и два и нахмурился.</p>
+    illus:{ bg:'linear-gradient(160deg,#5a2a0a,#2d1505)', ph:'⏳', label:'Волшебная страна зовёт' },
+    text:`<p>Алёшка быстро сложил в голове два и два и нахмурился.</p>
           <p class="dialog">— Это ты на меня намекаешь? Я не смогу: у меня родители вот-вот домой вернутся!</p>
-          <p class="dialog">— За время не переживай: оно в Волшебной стране течёт совсем по-другому. Ваша минута там за пару дней идёт. Поэтому нам нужно торопиться: пока мы разговариваем, Волшебная страна покрывается пылью и серостью.</p>`
+          <p class="dialog">— За время не переживай: оно в Волшебной стране течёт совсем по-другому. Ваша минута там за пару дней идёт. Поэтому нам нужно торопиться: пока мы тут разговариваем, Волшебная страна покрывается пылью и серостью.</p>`
   },
   {
-    id:'agree', type:'story', toc:'Фил соглашается',
-    text:`<p>Фил, конечно, уже знал, что согласится помочь Волшебнику, но решил немного повредничать.</p>
+    id:'agree', type:'story', toc:'Алёшка соглашается',
+    illus:{ bg:'linear-gradient(160deg,#1e4a30,#0d2318)', ph:'🤝', label:'Алёшка решается помочь' },
+    text:`<p>Алёшка, конечно, уже знал, что согласится помочь Волшебнику, но решил немного повредничать.</p>
           <p class="dialog">— Ты так говоришь, словно знаешь, что я решил тебе помочь!</p>
-          <p class="dialog">— Конечно, знаю! — улыбнулся Добрый Волшебник. — Я же всё-таки волшебник! Но сначала нам нужно кое-что сделать — нужно собрать немного волшебства, чтобы я мог активировать портал!</p>`
+          <p class="dialog">— Конечно, знаю! — улыбнулся в ответ Добрый Волшебник. — Я же всё-таки волшебник! Но сначала нам нужно кое-что сделать.</p>
+          <p class="dialog">— Во-первых, нам нужно собрать немного волшебства, а во-вторых, мне нужно набраться сил!</p>`
   },
   { id:'books', type:'bookshelf', toc:'⚡ Найди волшебные книги' },
-  { id:'tools', type:'tools',     toc:'🔧 Выбери снаряжение' },
+  { id:'meal',  type:'meal',      toc:'🍽 Накорми волшебника' },
   { id:'portal',type:'portal',    toc:'Через портал!' },
   {
     id:'mirror', type:'story', toc:'Волшебное зеркальце',
-    img:'9769fdb2-b295-40f9-a894-8771c9380e31.jfif',
-    text:`<p class="dialog">— Зачем оно мне? — скривился Фил. — Думаешь, если у меня причёска испортится, книга меня слушать не станет?</p>
-          <p class="dialog">— А что, если так? — ухмыльнулся Волшебник. — На самом деле это не простое зеркальце, а волшебное! Скажи ему: «Мне нужен совет!» — и оно сразу соединит тебя со мной. Я такие делал для своих садовников из орехов, каштанов и желудей.</p>
-          <p class="dialog">— А теперь приготовься! Раз, два, три, волшебный портал, отворись!</p>`
+    illus:{ bg:'linear-gradient(160deg,#1a2a5a,#0d1530)', ph:'🪞', label:'Волшебник и Алёшка у портала' },
+    text:`<p class="dialog">— Зачем оно мне? — скривился Алёшка. — Думаешь, если у меня причёска испортится, книга меня слушать не станет?</p>
+          <p class="dialog">— А что, если так? — ухмыльнулся Волшебник. — На самом деле это не простое зеркальце, а волшебное! Скажи ему: «Мне нужен совет!» — и оно сразу соединит тебя со мной.</p>
+          <p class="dialog">— Я такие делал для своих садовников-желудишек, и вот одно случайно завалялось в кармане. А теперь приготовься! Раз, два, три, волшебный портал, отворись!</p>`
   },
-  { id:'endch1', type:'endch1', toc:'Конец главы 1' },
-
-  // ── ГЛАВА 2 ──────────────────────────────
-  {
-    id:'wall', type:'story', ch2:true, toc:'Глава 2 · Стена',
-    text:`<p>Выход из волшебного портала получился очень болезненным: мальчишка ударился лбом о стену. Точнее так: о СТЕНУ! Это была огромная стена, которая тянулась далеко, скрываясь за горизонтом. И была очень — очень! — высокой.</p>
-          <p>Фил поднялся, почесал в затылке и понял, что проверить, как работает зеркало, придётся намного раньше, чем он планировал.</p>
-          <p class="dialog">— Мне нужен совет! — сказал он зеркальцу.</p>`
-  },
-  {
-    id:'mirror2', type:'story', ch2:true, toc:'Разговор с Волшебником',
-    img:'9769fdb2-b295-40f9-a894-8771c9380e31.jfif',
-    text:`<p class="dialog">— Стена? — удивился Волшебник. — Не было никакой стены! Портал должен был привести тебя к Матушке Веде!</p>
-          <p class="dialog">— Ну, если Матушка Веда живёт на огромной стене, всё идёт по плану! — Фил изо всех сил старался не улыбнуться. — Вот только стена такая высокая, что я не знаю, как подняться к ней в гости.</p>
-          <p class="dialog">— Шутник! — проворчал Волшебник. — Но это хорошо. Это Пыльная ведьма её построила, чтобы я не смог вернуться домой. Моё волшебство не может проникнуть сквозь неё. Может, там есть какая-то лестница?</p>`
-  },
-  {
-    id:'search', type:'story', ch2:true, toc:'Только листья…',
-    text:`<p>Фил неторопливо осмотрелся. Никакой лестницы не было, и ничего, что помогло бы её построить, тоже не было: Пыльная ведьма не планировала упрощать жизнь незваным гостям. Только листья шуршали под ногами, словно в Волшебной стране уже наступила осень.</p>
-          <p class="dialog">— Тут нет ничего, кроме листьев! — сказал Фил. — И мне кажется это странным, потому что сейчас лето!</p>
-          <p class="dialog">— Ничего странного! Скорее всего Пыльной ведьме помогал Южный ветер, а он любит срывать листья с деревьев Волшебной страны.</p>
-          <p class="dialog">— Что ж! — усмехнулся Фил. — Если среди этой листвы есть листья с деревьев возле дома Матушки Веды, можно сказать, что я уже побывал у неё в гостях!</p>
-          <p class="dialog">— А ты молодец! — воскликнул Волшебник. — Ты только что подал мне превосходную идею!</p>`
-  },
-  {
-    id:'idea', type:'story', ch2:true, toc:'Идея Волшебника',
-    text:`<p class="dialog">— Может, ты и мне расскажешь? — спросил Фил.</p>
-          <p class="dialog">— Конечно! Тем более что мне понадобится твоя помощь. Моя магия не может проникнуть сквозь стену Пыльной ведьмы — это факт. Но за её пределами она прекрасно работает! А значит, я смогу сделать из листьев маленький ковёр-самолёт!</p>
-          <p class="dialog">— Ковёр-самолёт? — недоверчиво переспросил Фил.</p>
-          <p class="dialog">— Ковёр-самолёт! Этого хватит, чтобы поднять тебя на вершину стены. А потом я попрошу листья вернуться домой, и ты спланируешь к хижине Матушки Веды — она живёт на границе Волшебной страны, совсем рядом со стеной.</p>
-          <p class="dialog">— А что значит «попрошу вернуться домой»?</p>
-          <p class="dialog">— Тебе нужно найти семь кленовых листьев: Матушка Веда очень любит клёны, поэтому в Волшебной стране они растут только возле её хижины!</p>`
-  },
-  { id:'leafgame', type:'leafgame', toc:'🍁 Собери кленовые листья' },
-  {
-    id:'carpet', type:'story', ch2:true, toc:'Ковёр-самолёт готов',
-    text:`<p class="dialog">— Закрой глаза! — попросил Волшебник. — Иногда заклинание так сверкает, что может ненадолго ослепить! Готов? Начинаем! Раз, два, три, ковёр-самолёт, соберись!</p>
-          <p>Когда Фил открыл глаза, сантиметрах в тридцати над землёй парил небольшой коврик, который переливался всеми цветами радуги.</p>
-          <p class="dialog">— Такой маленький?</p>
-          <p class="dialog">— И вовсе он не маленький! — обиделся Волшебник. — Как раз хватит, чтобы поднять одного мальчишку, который вечно жалуется, на вершину стены. Управляй голосом — просто скажи, куда хочешь попасть!</p>`
-  },
-  {
-    id:'fly', type:'story', ch2:true, toc:'Взлёт!',
-    text:`<p>Фил подошёл к коврику и осторожно присел на краешек: коврик немного просел, но не опустился. Мальчишка забросил ноги и подвинулся ближе к середине — пришлось поджать колени, чтобы не расстраивать Волшебника.</p>
-          <p>Фил глубоко вздохнул, зажмурился и выдохнул:</p>
-          <p class="dialog">— Вверх! На вершину стены!</p>
-          <p>Первые несколько секунд ничего не происходило. Потом коврик напрягся, по нему прошла волна, и он плавно поднялся в воздух — на метр, как будто проверял свои силы. А потом встрепенулся и резко взмыл вверх.</p>
-          <p>Буквально через пару секунд коврик поднял Фила на вершину стены, откуда открывался потрясающий вид. Правда, Фил не успел его оценить. Потому что только сейчас он понял, что означает «спланируете».</p>
-          <p>Понял — и испугался!</p>`
-  },
-  { id:'endch2', type:'endch2', toc:'Конец главы 2' }
+  { id:'end', type:'end', toc:'Конец главы 1' }
 ];
 
-const MAGIC_BOOKS = ['Золушка','Красная Шапочка','Кот в сапогах','Дюймовочка','Снежная королева'];
-const ALL_BOOKS   = [...MAGIC_BOOKS,'Мальчик-с-пальчик','Бременские музыканты','Али-Баба'];
+const MAGIC_BOOKS = ['Золушка','Красная Шапочка','Кот в Сапогах','Дюймовочка','Снежная Королева'];
+const ALL_BOOKS   = [...MAGIC_BOOKS,'Мальчик-с-Пальчик','Бременские музыканты','Али-Баба'];
 const BOOK_COLORS = ['#b03020','#1e6090','#1e7840','#703090','#c06010','#0e6870','#b04010','#1e2a40'];
 const BOOK_ICONS  = ['👠','🧢','🐱','🌸','❄️','👆','🎵','🏺'];
-
-const TOOLS = [
-  { id:'kit',    emoji:'🧰', name:'Набор «Маленький мастер»', hint:'Отвёртка, молоток, кусачки…', correct:true },
-  { id:'ball',   emoji:'⚽', name:'Футбольный мяч',           hint:'Хорошо для игры во дворе',  correct:false },
-  { id:'pencils',emoji:'✏️', name:'Набор карандашей',         hint:'Для рисования и творчества', correct:false },
-  { id:'boots',  emoji:'🥾', name:'Резиновые сапоги',         hint:'Отлично в дождь',            correct:false },
-  { id:'pistol', emoji:'🔫', name:'Игрушечный пистолет',      hint:'Пиу-пиу!',                  correct:false }
-];
-
-// Leaf game data — 20 leaves, 7 maple
-const ALL_LEAVES = [
-  { id:'l1',  maple:true,  icon:'🍁', name:'Кленовый' },
-  { id:'l2',  maple:false, icon:'🍃', name:'Берёзовый' },
-  { id:'l3',  maple:true,  icon:'🍁', name:'Кленовый' },
-  { id:'l4',  maple:false, icon:'🍂', name:'Дубовый' },
-  { id:'l5',  maple:false, icon:'🌿', name:'Ивовый' },
-  { id:'l6',  maple:true,  icon:'🍁', name:'Кленовый' },
-  { id:'l7',  maple:false, icon:'🍃', name:'Липовый' },
-  { id:'l8',  maple:false, icon:'🍂', name:'Осиновый' },
-  { id:'l9',  maple:true,  icon:'🍁', name:'Кленовый' },
-  { id:'l10', maple:false, icon:'🌿', name:'Рябиновый' },
-  { id:'l11', maple:false, icon:'🍃', name:'Каштановый' },
-  { id:'l12', maple:true,  icon:'🍁', name:'Кленовый' },
-  { id:'l13', maple:false, icon:'🍂', name:'Вязовый' },
-  { id:'l14', maple:false, icon:'🌿', name:'Ольховый' },
-  { id:'l15', maple:true,  icon:'🍁', name:'Кленовый' },
-  { id:'l16', maple:false, icon:'🍃', name:'Тополиный' },
-  { id:'l17', maple:false, icon:'🍂', name:'Дубовый' },
-  { id:'l18', maple:true,  icon:'🍁', name:'Кленовый' },
-  { id:'l19', maple:false, icon:'🌿', name:'Берёзовый' },
-  { id:'l20', maple:false, icon:'🍃', name:'Ясеневый' }
-];
 
 // ────────────────────────────────────────────
 // STATE
@@ -909,25 +785,24 @@ const S = {
   cur: 0,
   prev: -1,
   visited: new Set([0]),
+  bsSlide: 0,
   booksFound: new Set(),
   bookFeed: '',
-  toolChosen: null,
-  leavesFound: new Set(),
-  leafFeed: ''
+  meal: null
 };
 
 // ────────────────────────────────────────────
-// IMAGES
+// ILLUSTRATIONS — two real images, alternating
 // ────────────────────────────────────────────
-var IMG1 = '3e51266e-72de-4602-acee-ad76597d4c76.jfif';
-var IMG2 = '9769fdb2-b295-40f9-a894-8771c9380e31.jfif';
+var IMG1 = '3e51266e-72de-4602-acee-ad76597d4c76.jfif'; // Алёшка дома
+var IMG2 = '9769fdb2-b295-40f9-a894-8771c9380e31.jfif'; // Волшебник
 
-function illusPane(sc, i) {
-  var img = sc && sc.img ? sc.img : ((i % 2 === 1) ? IMG1 : IMG2);
-  var fbBg = (img === IMG1)
+// returns pane-illus div; odd screen index → IMG1, even → IMG2
+function illusPane(i) {
+  var img = (i % 2 === 1) ? IMG1 : IMG2;
+  var fbBg = (i % 2 === 1)
     ? 'linear-gradient(160deg,#7a3a1a,#3d1e0a)'
     : 'linear-gradient(160deg,#3a1060,#1a0840)';
-  if (sc && sc.ch2) fbBg = 'linear-gradient(160deg,#0a3028,#071820)';
   return '<div class="pane-illus">'
     + '<img src="'+img+'" alt="" style="width:100%;height:100%;object-fit:cover;display:block;" '
     + 'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
@@ -936,6 +811,133 @@ function illusPane(sc, i) {
     + '</div>'
     + '</div>';
 }
+
+// placeholder — keep old SCENES stub so nothing else breaks
+const SCENES = {
+
+  intro: function() {
+    var st = genStars(30);
+    return '<div class="illus-scene" style="background:radial-gradient(ellipse at 50% 75%,#2a1060 0%,#0d0a1e 65%);">'
+      + '<div style="position:absolute;inset:0;">'+st+'</div>'
+      + '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;">'
+      + '<div style="font-size:76px;filter:drop-shadow(0 0 32px rgba(201,162,39,.9));animation:float 3s ease-in-out infinite;z-index:1;">📖</div>'
+      + '<div style="z-index:1;font-size:22px;letter-spacing:10px;animation:float 2.5s ease-in-out infinite 1s;opacity:.7;">✨✦✨</div>'
+      + '<div style="z-index:1;font-size:32px;display:flex;gap:16px;animation:float 2.8s ease-in-out infinite .4s;">'
+      + '<span>🧙‍♂️</span><span style="font-size:22px;">✨</span><span>👦</span></div>'
+      + '</div>'
+      + '<div style="position:absolute;bottom:0;left:0;right:0;height:38%;background:linear-gradient(0deg,rgba(20,0,60,.75),transparent);"></div>'
+      + '<div class="scene-caption">Приключение начинается…</div>'
+      + '</div>';
+  },
+
+  wardrobe: function() {
+    return '<div class="illus-scene" style="background:linear-gradient(180deg,#10080e 0%,#1e1010 50%,#140c08 100%);">'
+      + '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">'
+      + '<div style="width:58%;height:76%;background:linear-gradient(180deg,#3d2010,#2a1408);border:3px solid #5a3218;border-radius:4px;position:relative;box-shadow:0 0 50px rgba(255,180,80,.08),inset 0 0 30px rgba(0,0,0,.6);">'
+      + '<div style="position:absolute;top:0;bottom:0;left:50%;width:2px;background:#1a0806;"></div>'
+      + '<div style="position:absolute;top:50%;left:calc(50% - 18px);transform:translateY(-50%);width:9px;height:14px;background:#c9a227;border-radius:2px;box-shadow:0 0 8px rgba(201,162,39,.6);"></div>'
+      + '<div style="position:absolute;top:50%;left:calc(50% + 9px);transform:translateY(-50%);width:9px;height:14px;background:#c9a227;border-radius:2px;box-shadow:0 0 8px rgba(201,162,39,.6);"></div>'
+      + '<div style="position:absolute;bottom:-1px;left:10%;right:10%;height:4px;background:rgba(180,100,255,.4);filter:blur(5px);animation:pulse 2s ease-in-out infinite;"></div>'
+      + '<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(100,40,180,.08),transparent 70%);"></div>'
+      + '</div>'
+      + '</div>'
+      + '<div style="position:absolute;bottom:0;left:0;right:0;height:22%;background:linear-gradient(0deg,rgba(0,0,0,.8),transparent);"></div>'
+      + '<div class="scene-caption">Что-то прячется в шкафу…</div>'
+      + '</div>';
+  },
+
+  backstory: function() {
+    var st = genStars(18, ['#ffffff','#d4e8ff','#f0f0a0']);
+    return '<div class="illus-scene" style="background:linear-gradient(180deg,#071828 0%,#0a3040 35%,#124a30 60%,#0d4020 100%);">'
+      + '<div style="position:absolute;top:0;left:0;right:0;height:55%;">'+st+'</div>'
+      + '<div style="position:absolute;bottom:26%;left:50%;transform:translateX(-50%);font-size:52px;filter:drop-shadow(0 0 18px rgba(120,220,255,.4));animation:floatSlow 4s ease-in-out infinite;">🏰</div>'
+      + '<div style="position:absolute;bottom:16%;left:8%;font-size:34px;animation:float 3s ease-in-out infinite .3s;">🌲</div>'
+      + '<div style="position:absolute;bottom:14%;right:10%;font-size:38px;animation:float 3.5s ease-in-out infinite .8s;">🌳</div>'
+      + '<div style="position:absolute;bottom:22%;left:28%;font-size:24px;animation:float 2.5s ease-in-out infinite 0.5s;">🌸</div>'
+      + '<div style="position:absolute;bottom:22%;right:25%;font-size:20px;animation:float 3s ease-in-out infinite 1.2s;">🌼</div>'
+      + '<div style="position:absolute;bottom:6%;left:0;right:0;text-align:center;font-size:15px;letter-spacing:5px;">🌺🌷🌻🌹🌷</div>'
+      + '<div style="position:absolute;bottom:0;left:0;right:0;height:30%;background:linear-gradient(0deg,#0d4020cc,transparent);"></div>'
+      + '<div class="scene-caption">Волшебная страна</div>'
+      + '</div>';
+  },
+
+  plan: function() {
+    var st = genStars(12, ['rgba(200,160,255,.6)','rgba(240,200,80,.5)']);
+    return '<div class="illus-scene" style="background:radial-gradient(ellipse at 50% 65%,#2a1060,#0d0818);">'
+      + '<div style="position:absolute;inset:0;">'+st+'</div>'
+      + '<div style="position:absolute;top:18%;left:50%;transform:translateX(-50%);font-size:40px;animation:float 2.5s ease-in-out infinite;opacity:.35;white-space:nowrap;letter-spacing:14px;">✦ ✧ ✦</div>'
+      + '<div style="position:absolute;bottom:16%;left:0;right:0;display:flex;align-items:flex-end;justify-content:center;gap:16px;">'
+      + '<div style="font-size:48px;animation:float 2.6s ease-in-out infinite;">🧙‍♂️</div>'
+      + '<div style="font-size:20px;animation:float 1.8s ease-in-out infinite .5s;color:#f0d060;padding-bottom:8px;">💬</div>'
+      + '<div style="font-size:44px;animation:float 2.9s ease-in-out infinite .9s;">👦</div>'
+      + '</div>'
+      + '<div style="position:absolute;bottom:14%;left:25%;right:25%;height:5px;background:rgba(180,100,255,.4);filter:blur(8px);"></div>'
+      + '<div class="scene-caption">Волшебник просит о помощи</div>'
+      + '</div>';
+  },
+
+  time: function() {
+    var st = genStars(16);
+    return '<div class="illus-scene" style="background:linear-gradient(135deg,#2a1408 0%,#0d0818 50%,#1a0a3e 100%);">'
+      + '<div style="position:absolute;inset:0;">'+st+'</div>'
+      + '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">'
+      + '<div style="font-size:68px;z-index:1;filter:drop-shadow(0 0 22px rgba(200,162,39,.6));animation:float 3.2s ease-in-out infinite;">⏳</div>'
+      + '<div style="z-index:1;font-size:22px;letter-spacing:6px;opacity:.5;animation:float 2s ease-in-out infinite .6s;">🌀 ✨ 🌀</div>'
+      + '</div>'
+      + '<div class="scene-caption">Время течёт иначе…</div>'
+      + '</div>';
+  },
+
+  agree: function() {
+    var st = genStars(10, ['rgba(240,200,100,.5)','rgba(255,180,80,.4)']);
+    return '<div class="illus-scene" style="background:radial-gradient(ellipse at 50% 70%,#2e1204,#0e0804);">'
+      + '<div style="position:absolute;inset:0;">'+st+'</div>'
+      + '<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 85%,rgba(200,120,0,.12),transparent 55%);"></div>'
+      + '<div style="position:absolute;bottom:14%;left:0;right:0;display:flex;align-items:flex-end;justify-content:center;gap:18px;">'
+      + '<div style="font-size:50px;animation:float 2.8s ease-in-out infinite .2s;">🧙‍♂️</div>'
+      + '<div style="font-size:24px;animation:float 1.9s ease-in-out infinite .6s;color:#f0d060;padding-bottom:6px;">🤝</div>'
+      + '<div style="font-size:46px;animation:float 3s ease-in-out infinite 1s;">👦</div>'
+      + '</div>'
+      + '<div style="position:absolute;bottom:12%;left:20%;right:20%;height:5px;background:rgba(255,180,60,.3);filter:blur(10px);"></div>'
+      + '<div class="scene-caption">Алёшка решает помочь</div>'
+      + '</div>';
+  },
+
+  portal: function() {
+    var st = genStars(22, ['#c8b4ff','#f0d060','#ffffff']);
+    return '<div class="illus-scene" style="background:radial-gradient(ellipse at 50% 50%,#1e0060 0%,#0d0a1e 65%);">'
+      + '<div style="position:absolute;inset:0;">'+st+'</div>'
+      + '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">'
+      + '<div style="position:absolute;width:200px;height:200px;border-radius:50%;border:3px solid rgba(130,70,255,.55);animation:pulse 2.2s ease-in-out infinite;"></div>'
+      + '<div style="position:absolute;width:155px;height:155px;border-radius:50%;border:3px solid rgba(170,100,255,.45);animation:pulse 2.2s ease-in-out infinite .35s;"></div>'
+      + '<div style="position:absolute;width:112px;height:112px;border-radius:50%;border:3px solid rgba(210,150,255,.4);animation:pulse 2.2s ease-in-out infinite .7s;"></div>'
+      + '<div style="width:58px;height:58px;border-radius:50%;background:radial-gradient(circle,rgba(220,180,255,1),rgba(140,80,255,.5));filter:blur(3px);z-index:1;"></div>'
+      + '</div>'
+      + '<div style="position:absolute;bottom:10%;left:0;right:0;display:flex;align-items:flex-end;justify-content:center;gap:14px;font-size:34px;">'
+      + '<span style="animation:float 2.5s ease-in-out infinite;">🧙‍♂️</span>'
+      + '<span style="font-size:22px;animation:float 2s ease-in-out infinite .4s;color:#d0b0ff;">✨</span>'
+      + '<span style="animation:float 2.8s ease-in-out infinite .7s;">👦</span>'
+      + '</div>'
+      + '<div class="scene-caption">Волшебный портал открывается!</div>'
+      + '</div>';
+  },
+
+  mirror: function() {
+    var st = genStars(14, ['#c8b4ff','#f0d060']);
+    return '<div class="illus-scene" style="background:linear-gradient(160deg,#0d1228,#1a0a3e);">'
+      + '<div style="position:absolute;inset:0;">'+st+'</div>'
+      + '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">'
+      + '<div style="width:52%;height:70%;background:linear-gradient(160deg,rgba(120,80,220,.25),rgba(70,40,160,.15));border:4px solid rgba(201,162,39,.55);border-radius:50% 50% 42% 42%/58% 58% 42% 42%;box-shadow:0 0 35px rgba(201,162,39,.25),inset 0 0 35px rgba(100,60,200,.2);display:flex;align-items:center;justify-content:center;">'
+      + '<div style="font-size:38px;animation:floatSlow 3.5s ease-in-out infinite;filter:drop-shadow(0 0 14px rgba(200,160,255,.7));">🪞</div>'
+      + '</div>'
+      + '</div>'
+      + '<div style="position:absolute;top:18%;right:18%;font-size:22px;animation:float 2.2s ease-in-out infinite;">✨</div>'
+      + '<div style="position:absolute;bottom:22%;left:16%;font-size:18px;animation:float 2.8s ease-in-out infinite .6s;">⭐</div>'
+      + '<div style="position:absolute;top:28%;left:20%;font-size:16px;animation:float 3s ease-in-out infinite 1s;opacity:.6;">💫</div>'
+      + '<div class="scene-caption">Волшебное зеркальце</div>'
+      + '</div>';
+  }
+};
 
 // ────────────────────────────────────────────
 // RENDER
@@ -948,9 +950,8 @@ function render() {
 function renderTop() {
   var n = SCREENS.length;
   document.getElementById('progLabel').textContent = (S.cur+1)+'/'+n;
-  document.getElementById('progDots').innerHTML = SCREENS.map(function(sc,i) {
+  document.getElementById('progDots').innerHTML = SCREENS.map(function(_,i) {
     var c = 'prog-dot';
-    if (sc.ch2) c += ' ch2';
     if (i === S.cur) c += ' cur';
     else if (S.visited.has(i)) c += ' vis';
     return '<div class="'+c+'"></div>';
@@ -969,36 +970,37 @@ function renderScreens() {
 // ── builders ────────────────────────────────
 function build(sc, i) {
   switch(sc.type) {
-    case 'cover':    return buildCover();
-    case 'story':    return buildStory(sc,i);
-    case 'bookshelf':return buildBookshelf(i);
-    case 'tools':    return buildTools(i);
-    case 'portal':   return buildPortal(i);
-    case 'endch1':   return buildEndCh1();
-    case 'leafgame': return buildLeafGame(i);
-    case 'endch2':   return buildEndCh2();
+    case 'cover':     return buildCover();
+    case 'story':     return buildStory(sc,i);
+    case 'backstory': return buildBackstory(sc,i);
+    case 'bookshelf': return buildBookshelf(i);
+    case 'meal':      return buildMeal(i);
+    case 'portal':    return buildPortal(i);
+    case 'end':       return buildEnd();
   }
   return '';
 }
 
-function navBar(i, fwdDisabled, ch2) {
-  var cls2 = ch2 ? ' ch2' : '';
+// illusPane(sc) kept as alias — callers pass index directly now
+
+function navBar(i, fwdDisabled) {
   var back = i > 0
     ? '<button class="btn btn-back" onclick="go('+i+'-1)">← Назад</button>' : '';
   var fwd = i < SCREENS.length-1
-    ? '<button class="btn btn-main'+cls2+'" onclick="go('+(i+1)+')" '+(fwdDisabled?'disabled':'')+'>Дальше&nbsp;→</button>' : '';
+    ? '<button class="btn btn-main" onclick="go('+(i+1)+')" '+(fwdDisabled?'disabled':'')+'>Дальше&nbsp;→</button>' : '';
   return '<div class="nav-bar">'+back+fwd+'<button class="btn btn-toc" onclick="tocOpen()">☰</button></div>';
 }
 
 function buildCover() {
+  // cover uses IMG1 (odd index 1 logic)
   return '<div class="pane-wrap" style="background:radial-gradient(ellipse at 30% 60%,#2a1060,#0d0a1e);">'
-    + illusPane(null,1)
+    + illusPane(1)
     + '<div class="pane-text" style="background:transparent;border-left:1px solid rgba(201,162,39,.18);">'
     + '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 36px;">'
     + '<div style="color:rgba(201,162,39,.45);font-size:11px;letter-spacing:3px;font-family:Arial,sans-serif;text-transform:uppercase;margin-bottom:22px;">✦ интерактивная сказка ✦</div>'
     + '<div class="cover-title">Возвращение<br>Волшебной книги</div>'
     + '<div class="cover-line"></div>'
-    + '<div class="cover-sub">Главы 1 и 2</div>'
+    + '<div class="cover-sub">Глава первая</div>'
     + '<button class="btn-start" onclick="go(1)">Читать&nbsp;→</button>'
     + '<div style="margin-top:20px;color:rgba(201,162,39,.3);font-size:11px;font-family:Arial,sans-serif;letter-spacing:1px;">для детей 6–7 лет</div>'
     + '</div>'
@@ -1007,16 +1009,44 @@ function buildCover() {
 }
 
 function buildStory(sc, i) {
-  var ch2 = sc.ch2;
-  var headCls = 'chapter-head' + (ch2 ? ' ch2' : '');
-  var tocLabel = sc.toc.replace(/^Глава\s+\S+\s*[·•]\s*/i, '');
-  var label = ch2 ? 'Глава&nbsp;II&nbsp;·&nbsp;'+tocLabel : 'Глава&nbsp;I&nbsp;·&nbsp;'+sc.toc;
-  var head = '<div class="'+headCls+'">'+label+'</div>';
+  var head = '<div class="chapter-head">Глава&nbsp;I&nbsp;·&nbsp;'+sc.toc+'</div>';
   return '<div class="pane-wrap">'
-    + illusPane(sc,i)
+    + illusPane(i)
     + '<div class="pane-text">'
     + '<div class="scroll-area"><div class="story-text">'+head+sc.text+'</div></div>'
-    + navBar(i, false, ch2)
+    + navBar(i)
+    + '</div>'
+    + '</div>';
+}
+
+function buildBackstory(sc, i) {
+  var n   = sc.slides.length;
+  var cur = Math.min(S.bsSlide, n-1);
+  var isLast = cur === n-1;
+  var slidesHTML = sc.slides.map(function(s,j) {
+    return '<div class="bslide'+(j===cur?' active':'')+'">'+s+'</div>';
+  }).join('');
+  var dotsHTML = sc.slides.map(function(_,j) {
+    return '<div class="bdot'+(j===cur?' active':'')+'" onclick="bsGo('+j+')"></div>';
+  }).join('');
+  return '<div class="pane-wrap">'
+    + illusPane(i)
+    + '<div class="pane-text">'
+    + '<div class="scroll-area">'
+    + '<div class="bs-header">'
+    + '<span class="bs-badge">История Волшебной страны</span>'
+    + '<span style="font-size:13px;color:#888;font-family:Arial,sans-serif;">'+(cur+1)+'&nbsp;/&nbsp;'+n+'</span>'
+    + '</div>'
+    + '<div class="story-text">'+slidesHTML+'</div>'
+    + '<div class="bs-dots">'+dotsHTML+'</div>'
+    + '</div>'
+    + '<div class="nav-bar">'
+    + (i>0?'<button class="btn btn-back" onclick="go('+(i-1)+')">← Назад</button>':'')
+    + (isLast
+        ? '<button class="btn btn-main" onclick="go('+(i+1)+')">Продолжить&nbsp;→</button>'
+        : '<button class="btn btn-main" onclick="bsNext()">Дальше&nbsp;→</button>')
+    + '<button class="btn btn-toc" onclick="tocOpen()">☰</button>'
+    + '</div>'
     + '</div>'
     + '</div>';
 }
@@ -1047,7 +1077,7 @@ function buildBookshelf(i) {
 
   return '<div class="full-screen-wrap" style="background:linear-gradient(180deg,#f5ede0,#ede0cc);">'
     + '<div style="padding:16px 20px 6px;flex-shrink:0;">'
-    + '<div class="game-intro">— Ты разве не знаешь, что на страницах любой книжки со сказками всегда остаётся немножечко волшебства? Найди для меня пять нужных книжек!</div>'
+    + '<div class="game-intro">— Ты разве не знаешь, что на страницах любой книжки со сказками всегда остаётся немножечко волшебства? Найди для меня пять нужных книжек в твоём шкафу!</div>'
     + '<div class="magic-bar-wrap">'
     + '<div class="magic-bar-label"><span>✨ Волшебство</span><span>'+found+'&nbsp;из&nbsp;5</span></div>'
     + '<div class="magic-bar"><div class="magic-fill" style="width:'+pct+'%"></div></div>'
@@ -1074,51 +1104,53 @@ function buildBookshelf(i) {
     + '</div>';
 }
 
-function buildTools(i) {
-  var ch = S.toolChosen;
-  var resText = '';
-  if (ch === 'kit')  resText = '— Отлично! — воскликнул Волшебник. — Умный мальчишка! Именно этот набор и пригодится тебе в Волшебной стране!';
-  else if (ch)       resText = '— Хм… — покачал головой Волшебник. — Подумай ещё раз! Тебе нужно то, что уже помогло тебе сегодня вечером…';
-
-  var toolsHTML = TOOLS.map(function(t) {
-    var cls = 'tool-card';
-    if (ch === t.id) cls += t.correct ? ' chosen-right' : ' chosen-wrong';
-    return '<div class="'+cls+'" onclick="pickTool(\''+t.id+'\')">'
-      + '<span class="tool-emoji">'+t.emoji+'</span>'
-      + '<div class="tool-name">'+t.name+'</div>'
-      + '<div class="tool-hint">'+t.hint+'</div>'
-      + '</div>';
-  }).join('');
-
-  var done = ch === 'kit';
-
+function buildMeal(i) {
+  var ch  = S.meal;
+  var res = ch==='toast'
+    ? '«Ладно, сойдёт!» — буркнул Волшебник. Между его ладонями мелькнула маленькая искра.'
+    : ch==='omelette'
+    ? '«Вот это другое дело!» — обрадовался Волшебник. Его ладони ярко заискрились!'
+    : '';
   return '<div class="full-screen-wrap">'
-    + '<div class="scroll-area" style="padding-top:24px;">'
+    + '<div class="scroll-area" style="padding-top:24px;display:flex;flex-direction:column;justify-content:center;">'
     + '<div class="story-text" style="margin-bottom:18px;">'
-    + '<p>Волшебник потёр ладошкой об ладошку — между ними промелькнула искра.</p>'
-    + '<p class="dialog">— Хорошо! А теперь перейдём к проверке! Я хочу быть уверен, что ты умеешь решать задачи. Выбери то, что поможет тебе в путешествии. Подсказка: сегодня это тебе уже помогло!</p>'
+    + '<p>Волшебник потёр ладошкой об ладошку — между ними промелькнула искра!</p>'
+    + '<p class="dialog">— Мне просто нужно поесть: чтобы творить волшебство, волшебник должен быть сытым!</p>'
     + '</div>'
-    + '<div class="tool-grid">'+toolsHTML+'</div>'
-    + '<div class="tool-result">'+resText+'</div>'
+    + '<div class="meal-q">Чем накормить Волшебника?</div>'
+    + '<div class="meal-grid">'
+    + '<div class="meal-card'+(ch==='toast'?' chosen':'')+'" onclick="pickMeal(\'toast\')">'
+    + '<span class="meal-emoji">🍞</span>'
+    + '<div class="meal-name">Тост с шоколадной пастой</div>'
+    + '<div class="meal-hint">Быстро и вкусно</div>'
+    + '</div>'
+    + '<div class="meal-card'+(ch==='omelette'?' chosen':'')+'" onclick="pickMeal(\'omelette\')">'
+    + '<span class="meal-emoji">🍳</span>'
+    + '<div class="meal-name">Омлет, сосиска и чай</div>'
+    + '<div class="meal-hint">Чуть дольше, но сытнее</div>'
+    + '</div>'
+    + '</div>'
+    + '<div class="meal-result">'+res+'</div>'
     + '</div>'
     + '<div class="nav-bar">'
     + '<button class="btn btn-back" onclick="go('+(i-1)+')">← Назад</button>'
-    + '<button class="btn btn-main" onclick="go('+(i+1)+')" '+(done?'':'disabled')+'>Дальше&nbsp;→</button>'
+    + '<button class="btn btn-main" onclick="go('+(i+1)+')" '+(ch?'':'disabled')+'>Дальше&nbsp;→</button>'
     + '<button class="btn btn-toc" onclick="tocOpen()">☰</button>'
     + '</div>'
     + '</div>';
 }
 
 function buildPortal(i) {
-  var txt = '<p>Добрый Волшебник потёр ладони — они ярко заискрились!</p>'
-    + '<p class="dialog">— Ну, вот теперь мы готовы!</p>'
-    + '<p class="dialog">— Постой! — заволновался Фил. — К чему готовы? Что я там делать-то буду в твоей Волшебной стране?</p>'
-    + '<p class="dialog">— Всё просто! Находишь Волшебную книгу, спрашиваешь у неё, как выгнать Пыльную ведьму и вернуть меня, — а потом она открывается на нужной странице и говорит, что делать.</p>'
-    + '<p class="dialog">— А если что-то пойдёт не так?</p>'
-    + '<p class="dialog">— Хороший вопрос! — Волшебник хлопнул себя по лбу. — Ну, конечно! Вот, возьми.</p>'
-    + '<p>Он протянул мальчишке малюсенькое зеркальце.</p>';
+  var omel = S.meal==='omelette';
+  var txt  = omel
+    ? '<p>Перекусив, Добрый Волшебник вытер рот рукавом и потёр ладони — они ярко заискрились!</p>'
+      + '<p class="dialog">— Вот теперь я в полной силе! — воскликнул Волшебник. — Смогу перенести тебя прямо к домику тётушки Веды — она знает Волшебную страну как свои пять пальцев!</p>'
+      + '<p class="dialog">— Держись крепче! Раз, два, три, волшебный портал, отворись!</p>'
+    : '<p>Перекусив, Добрый Волшебник вытер рот рукавом и потёр ладони — они слабо засветились.</p>'
+      + '<p class="dialog">— Ну, вот, уже лучше! Сил маловато, но для переноса хватит. Только учти: доставлю тебя лишь до стены, которой Пылевая ведьма обнесла Волшебную страну.</p>'
+      + '<p class="dialog">— Держись крепче! Раз, два, три, волшебный портал, отворись!</p>';
   return '<div class="pane-wrap">'
-    + illusPane(null, i)
+    + illusPane(i)
     + '<div class="pane-text">'
     + '<div class="scroll-area"><div class="story-text"><div class="chapter-head">Глава&nbsp;I&nbsp;·&nbsp;Через портал!</div>'+txt+'</div></div>'
     + navBar(i)
@@ -1126,78 +1158,24 @@ function buildPortal(i) {
     + '</div>';
 }
 
-function buildEndCh1() {
-  var stars = genEndStars(28, false);
-  return '<div class="end-body">'
-    + '<div class="end-stars">'+stars+'</div>'
-    + '<div class="end-icon">🌟</div>'
-    + '<div class="end-title">Конец первой главы</div>'
-    + '<div class="end-hint">Фил шагнул в волшебный портал. Что ждёт его в Волшебной стране?</div>'
-    + '<div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">'
-    + '<button class="btn-restart" onclick="go('+(CH2)+')">Читать главу&nbsp;2&nbsp;→</button>'
-    + '<button class="btn-restart" style="background:#e8dcc8;color:#2d1e0e;box-shadow:none;" onclick="restart()">Начать сначала</button>'
-    + '</div>'
-    + '</div>';
-}
-
-function buildLeafGame(i) {
-  var found = S.leavesFound.size;
-  var pct   = Math.round(found/7*100);
-  var done  = found === 7;
-
-  var leavesHTML = ALL_LEAVES.map(function(l) {
-    var isPicked = S.leavesFound.has(l.id);
-    var cls = 'leaf-item' + (isPicked?' picked':'');
-    var click = isPicked ? '' : ' onclick="clickLeaf(\''+l.id+'\','+l.maple+')"';
-    return '<div class="'+cls+'"'+click+'>'
-      + '<span class="l-icon">'+l.icon+'</span>'
-      + '<span class="l-name">'+l.name+'</span>'
-      + '</div>';
-  }).join('');
-
-  return '<div class="full-screen-wrap" style="background:linear-gradient(180deg,#f0ede0,#e0dcc8);">'
-    + '<div style="padding:16px 20px 6px;flex-shrink:0;">'
-    + '<div class="leaf-intro">— Тебе нужно найти семь кленовых листьев: Матушка Веда очень любит клёны, и в Волшебной стране они растут только возле её хижины!</div>'
-    + '<div class="leaf-bar-wrap">'
-    + '<div class="leaf-bar-label"><span>🍁 Кленовые листья</span><span>'+found+'&nbsp;из&nbsp;7</span></div>'
-    + '<div class="leaf-bar"><div class="leaf-fill" style="width:'+pct+'%"></div></div>'
-    + '</div>'
-    + '<div class="leaf-feed" id="lfFeed">'+S.leafFeed+'</div>'
-    + '</div>'
-    + '<div style="flex:1;overflow-y:auto;padding:0 20px 12px;">'
-    + '<div class="leaf-pile">'+leavesHTML+'</div>'
-    + '<div style="text-align:center;padding:10px 0 0;">'
-    + '<span style="font-size:13px;color:#7a6040;font-family:Arial,sans-serif;font-style:italic;">'
-    + (done ? '🌟&nbsp;Все семь кленовых листьев собраны!' : 'Нажимай на листья — ищи кленовые!')
-    + '</span>'
-    + '</div>'
-    + '</div>'
-    + '<div class="nav-bar">'
-    + '<button class="btn btn-back" onclick="go('+(i-1)+')">← Назад</button>'
-    + '<button class="btn btn-main ch2" onclick="go('+(i+1)+')" '+(done?'':'disabled')+'>Дальше&nbsp;→</button>'
-    + '<button class="btn btn-toc" onclick="tocOpen()">☰</button>'
-    + '</div>'
-    + '</div>';
-}
-
-function buildEndCh2() {
-  var stars = genEndStars(28, true);
-  return '<div class="end-body ch2">'
-    + '<div class="end-stars">'+stars+'</div>'
-    + '<div class="end-icon">🍁</div>'
-    + '<div class="end-title">Конец второй главы</div>'
-    + '<div class="end-hint">Ковёр поднял Фила на вершину стены — и мальчишка понял, что означает слово «спланируете». Что ждёт его впереди?</div>'
-    + '<button class="btn-restart" style="background:linear-gradient(135deg,#2ed4c0,#1e8a7a);color:#fff;" onclick="restart()">Читать сначала</button>'
-    + '</div>';
-}
-
-function genEndStars(n, teal) {
-  return Array.from({length:n}, function(_,k) {
+function buildEnd() {
+  var omel = S.meal==='omelette';
+  var hint = omel
+    ? 'Алёшка оказался у домика тётушки Веды. Что она ему расскажет?'
+    : 'Алёшка оказался у высокой стены Волшебной страны. Как же через неё перебраться?';
+  var stars = Array.from({length:28}, function(_,k) {
     var x  = Math.random()*100, y = Math.random()*100;
     var d  = (2+Math.random()*4).toFixed(1)+'s';
     var dl = (Math.random()*3).toFixed(1)+'s';
     return '<div class="end-star" style="left:'+x+'%;top:'+y+'%;--d:'+d+';--dl:'+dl+'"></div>';
   }).join('');
+  return '<div class="end-body">'
+    + '<div class="end-stars">'+stars+'</div>'
+    + '<div class="end-icon">🌟</div>'
+    + '<div class="end-title">Конец первой главы</div>'
+    + '<div class="end-hint">'+hint+'</div>'
+    + '<button class="btn-restart" onclick="restart()">Читать сначала</button>'
+    + '</div>';
 }
 
 // ────────────────────────────────────────────
@@ -1205,12 +1183,19 @@ function genEndStars(n, teal) {
 // ────────────────────────────────────────────
 function go(i) {
   if (i<0 || i>=SCREENS.length) return;
+  if (SCREENS[S.cur].type==='backstory' && SCREENS[i].type!=='backstory') S.bsSlide=0;
   S.prev = S.cur;
   S.cur  = i;
   S.visited.add(i);
   render();
   document.getElementById('screens').scrollTop = 0;
 }
+
+function bsNext() {
+  var n = SCREENS[S.cur].slides.length;
+  if (S.bsSlide < n-1) { S.bsSlide++; render(); }
+}
+function bsGo(i) { S.bsSlide=i; render(); }
 
 function clickBook(name, gi) {
   if (S.booksFound.has(name)) return;
@@ -1228,42 +1213,20 @@ function clickBook(name, gi) {
   }
 }
 
-function pickTool(id) {
-  S.toolChosen = id;
-  render();
-}
-
-function clickLeaf(id, maple) {
-  if (S.leavesFound.has(id)) return;
-  if (maple) {
-    S.leavesFound.add(id);
-    S.leafFeed = S.leavesFound.size===7
-      ? '🌟 Все семь кленовых листьев собраны!'
-      : '🍁 Кленовый! Найден! ('+S.leavesFound.size+' из 7)';
-    render();
-  } else {
-    S.leafFeed = 'Нет, это не клён…';
-    render();
-  }
-}
+function pickMeal(ch) { S.meal=ch; render(); }
 
 function restart() {
-  S.cur=0; S.prev=-1; S.visited=new Set([0]);
-  S.booksFound=new Set(); S.bookFeed='';
-  S.toolChosen=null;
-  S.leavesFound=new Set(); S.leafFeed='';
+  S.cur=0; S.prev=-1; S.visited=new Set([0]); S.bsSlide=0;
+  S.booksFound=new Set(); S.bookFeed=''; S.meal=null;
   render();
 }
 
 function tocOpen() {
-  var html = '';
-  SCREENS.forEach(function(sc,i) {
-    if (i === CH2) html += '<div class="toc-sep">Глава 2</div>';
-    html += '<div class="toc-row'+(i===S.cur?' cur':'')+'" onclick="go('+i+');tocClose()">'
+  document.getElementById('tocList').innerHTML = SCREENS.map(function(sc,i) {
+    return '<div class="toc-row'+(i===S.cur?' cur':'')+'" onclick="go('+i+');tocClose()">'
       + '<div class="toc-num">'+(i+1)+'</div><div>'+sc.toc+'</div>'
       + '</div>';
-  });
-  document.getElementById('tocList').innerHTML = html;
+  }).join('');
   document.getElementById('toc').classList.add('open');
 }
 function tocClose() { document.getElementById('toc').classList.remove('open'); }
