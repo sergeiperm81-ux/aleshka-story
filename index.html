@@ -397,6 +397,7 @@ body::before {
   display: flex;
   gap: 8px;
   margin-bottom: 0;
+  justify-content: center;
   align-items: flex-end;
 }
 .shelf-plank:last-child { margin-bottom: 0; }
@@ -410,7 +411,8 @@ body::before {
 .book-cover {
   flex: 1;
   min-width: 0;
-  height: 170px;
+  max-width: 115px;
+  height: 190px;
   border-radius: 2px 5px 5px 2px;
   cursor: pointer;
   display: flex;
