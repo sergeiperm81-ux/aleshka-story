@@ -395,8 +395,10 @@ body::before {
 }
 .shelf-plank {
   display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 0;
+  justify-content: center;
+  align-items: flex-end;
 }
 .shelf-plank:last-child { margin-bottom: 0; }
 .shelf-divider {
@@ -407,19 +409,20 @@ body::before {
   box-shadow: 0 2px 4px rgba(0,0,0,.4);
 }
 .book-cover {
-  flex: 1;
-  border-radius: 2px 5px 5px 2px;
+  width: 76px;
+  height: 126px;
+  flex-shrink: 0;
+  border-radius: 2px 4px 4px 2px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 12px 10px 10px 18px;
-  min-height: 120px;
+  justify-content: flex-end;
+  padding: 0 7px 12px 14px;
   text-align: center;
   user-select: none;
-  transition: transform .2s, box-shadow .2s;
-  box-shadow: 3px 4px 12px rgba(0,0,0,.65), inset -2px 0 5px rgba(0,0,0,.2);
+  transition: transform .22s cubic-bezier(.2,.8,.4,1), box-shadow .22s;
+  box-shadow: 3px 6px 16px rgba(0,0,0,.7), inset -2px 0 6px rgba(0,0,0,.25);
   position: relative;
   overflow: hidden;
 }
@@ -428,28 +431,28 @@ body::before {
   content: '';
   position: absolute;
   top: 0; left: 0; bottom: 0;
-  width: 10px;
-  background: rgba(0,0,0,.32);
-  border-right: 1px solid rgba(255,255,255,.1);
+  width: 11px;
+  background: linear-gradient(90deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,.2) 100%);
+  border-right: 1px solid rgba(255,255,255,.13);
 }
-/* Края страниц справа */
+/* Края страниц справа — имитация пачки листов */
 .book-cover::after {
   content: '';
   position: absolute;
-  top: 3px; right: 0; bottom: 3px;
-  width: 5px;
+  top: 2px; right: 0; bottom: 2px;
+  width: 6px;
   background: repeating-linear-gradient(
     180deg,
-    rgba(255,255,255,.18) 0px,
-    rgba(255,255,255,.18) 1px,
-    rgba(200,175,140,.08) 1px,
-    rgba(200,175,140,.08) 3px
+    rgba(255,255,255,.22) 0px,
+    rgba(255,255,255,.22) 1px,
+    rgba(210,185,150,.1) 1px,
+    rgba(210,185,150,.1) 3px
   );
-  border-left: 1px solid rgba(255,255,255,.07);
+  border-left: 1px solid rgba(255,255,255,.1);
 }
 .book-cover:not(.found):hover {
-  transform: translateY(-7px) scale(1.05);
-  box-shadow: 4px 14px 26px rgba(0,0,0,.75);
+  transform: translateY(-12px);
+  box-shadow: 3px 20px 32px rgba(0,0,0,.85);
 }
 .book-cover.found {
   box-shadow: 0 0 0 2px var(--gold), 0 0 22px rgba(240,208,96,.6);
@@ -467,42 +470,79 @@ body::before {
   font-size: 13px;
   z-index: 1;
 }
-.book-icon { font-size: 24px; margin-bottom: 6px; position: relative; z-index: 1; }
+.book-icon { font-size: 26px; margin-bottom: 7px; position: relative; z-index: 1; }
 .book-title {
-  font-size: 11px;
-  color: rgba(255,255,255,.95);
+  font-size: 10.5px;
+  color: rgba(255,255,255,.97);
   font-family: Arial, sans-serif;
-  line-height: 1.3;
-  font-weight: 600;
+  line-height: 1.25;
+  font-weight: 700;
   word-break: break-word;
-  text-shadow: 0 1px 3px rgba(0,0,0,.6);
+  text-shadow: 0 1px 4px rgba(0,0,0,.7);
   position: relative; z-index: 1;
+  hyphens: auto;
+}
+/* Блик сверху — имитация освещения */
+.book-shine {
+  position: absolute;
+  top: 0; left: 11px; right: 0;
+  height: 38%;
+  background: linear-gradient(180deg, rgba(255,255,255,.13) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+/* Декоративная полоска-разделитель над названием */
+.book-band {
+  position: absolute;
+  bottom: 34px; left: 11px; right: 6px;
+  height: 1px;
+  background: rgba(255,255,255,.18);
+  z-index: 1;
 }
 
 /* ══════════════════════════════════════════
    TOOL SELECTION
 ══════════════════════════════════════════ */
-.tool-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
+/* ── Полка инструментов ── */
+.tool-shelf {
+  background: linear-gradient(180deg,#1c0c04 0%,#3a1808 100%);
+  border-radius: 12px;
+  padding: 14px 14px 4px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,200,100,.07);
   margin-bottom: 14px;
 }
+.tool-shelf-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: flex-end;
+}
+.tool-shelf-plank {
+  height: 8px;
+  background: linear-gradient(180deg,#a05822 0%,#6a3210 100%);
+  border-radius: 4px;
+  margin: 3px 0 14px;
+  box-shadow: 0 3px 8px rgba(0,0,0,.55);
+}
 .tool-card {
-  border: 3px solid #e0d4c0;
-  border-radius: 18px;
-  padding: 18px 12px;
+  width: 88px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 10px 10px 3px 3px;
+  padding: 14px 6px 11px;
   text-align: center;
   cursor: pointer;
-  background: #fff;
-  transition: border-color .2s, transform .15s, box-shadow .2s;
+  background: #f5ede0;
+  transition: transform .2s cubic-bezier(.2,.8,.4,1), box-shadow .2s;
+  box-shadow: 2px 4px 12px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.55);
+  position: relative;
 }
-.tool-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow); }
-.tool-card.chosen-right { border-color: #2a7a40; background: #f0f8f2; box-shadow: 0 4px 16px rgba(42,122,64,.2); }
-.tool-card.chosen-wrong { border-color: #c03030; background: #fff5f5; }
-.tool-emoji { font-size: 46px; display: block; margin-bottom: 10px; }
-.tool-name { font-size: 15px; font-weight: bold; color: var(--ink); margin-bottom: 4px; line-height: 1.3; }
-.tool-hint { font-size: 12px; color: #888; font-family: Arial, sans-serif; }
+.tool-card:hover { transform: translateY(-11px); box-shadow: 2px 15px 26px rgba(0,0,0,.75); }
+.tool-card.chosen-right { background:#e8f5ec; box-shadow:0 0 0 2px #2a7a40,0 0 22px rgba(42,122,64,.45); transform:translateY(-5px); }
+.tool-card.chosen-wrong { background:#fff0f0; box-shadow:0 0 0 2px #c03030,0 4px 12px rgba(0,0,0,.3); }
+.tool-emoji { font-size: 40px; display: block; margin-bottom: 8px; }
+.tool-name { font-size: 11px; font-weight: 700; color: #3a2010; line-height: 1.3; }
+.tool-hint { display: none; }
 .tool-result {
   min-height: 26px;
   font-size: 15px;
@@ -1061,7 +1101,8 @@ function buildBookshelf(i) {
 
   function bookHTML(name) {
     var gi    = ALL_BOOKS.indexOf(name);
-    var st    = 'background:'+BOOK_COLORS[gi]+';';
+    var base  = BOOK_COLORS[gi];
+    var st    = 'background:'+base+';';
     var icon  = BOOK_ICONS[gi];
     var isFnd = S.booksFound.has(name);
     var star  = isFnd ? '<div class="book-star">✨</div>' : '';
@@ -1070,6 +1111,8 @@ function buildBookshelf(i) {
     var idAttr = ' id="bk'+gi+'"';
     return '<div class="'+cls+'"'+idAttr+' style="'+st+'"'+click+'>'
       + star
+      + '<div class="book-shine"></div>'
+      + '<div class="book-band"></div>'
       + '<div class="book-icon">'+icon+'</div>'
       + '<div class="book-title">'+name+'</div>'
       + '</div>';
@@ -1113,25 +1156,32 @@ function buildTools(i) {
   if (ch === 'kit')  resText = '— Отлично! — воскликнул Волшебник. — Умный мальчишка! Именно этот набор и пригодится тебе в Волшебной стране!';
   else if (ch)       resText = '— Хм… — покачал головой Волшебник. — Подумай ещё раз! Тебе нужно то, что уже помогло тебе сегодня вечером…';
 
-  var toolsHTML = TOOLS.map(function(t) {
+  function toolCard(t) {
     var cls = 'tool-card';
     if (ch === t.id) cls += t.correct ? ' chosen-right' : ' chosen-wrong';
     return '<div class="'+cls+'" id="tc-'+t.id+'" onclick="pickTool(\''+t.id+'\')">'
       + '<span class="tool-emoji">'+t.emoji+'</span>'
       + '<div class="tool-name">'+t.name+'</div>'
-      + '<div class="tool-hint">'+t.hint+'</div>'
       + '</div>';
-  }).join('');
+  }
+  var row1 = TOOLS.slice(0,3).map(toolCard).join('');
+  var row2 = TOOLS.slice(3).map(toolCard).join('');
 
   var done = ch === 'kit';
 
   return '<div class="full-screen-wrap">'
-    + '<div class="scroll-area" style="padding-top:24px;">'
-    + '<div class="story-text" style="margin-bottom:18px;">'
+    + '<div class="scroll-area" style="padding-top:20px;">'
+    + '<div class="story-text" style="margin-bottom:16px;">'
     + '<p>Волшебник потёр ладошкой об ладошку — между ними промелькнула искра.</p>'
-    + '<p class="dialog">— Хорошо! А теперь перейдём к проверке! Я хочу быть уверен, что ты умеешь решать задачи. Выбери то, что поможет тебе в путешествии. Подсказка: сегодня это тебе уже помогло!</p>'
+    + '<p class="dialog">— Хорошо! А теперь перейдём к проверке! Выбери то, что поможет тебе в путешествии. Подсказка: сегодня это тебе уже помогло!</p>'
     + '</div>'
-    + '<div class="tool-grid">'+toolsHTML+'</div>'
+    + '<div style="font-size:12px;color:#a08060;font-family:Arial,sans-serif;text-align:center;margin-bottom:10px;font-style:italic;">Нажми на предмет, который нужен в дороге:</div>'
+    + '<div class="tool-shelf">'
+    + '<div class="tool-shelf-row">'+row1+'</div>'
+    + '<div class="tool-shelf-plank"></div>'
+    + '<div class="tool-shelf-row">'+row2+'</div>'
+    + '<div class="tool-shelf-plank"></div>'
+    + '</div>'
     + '<div id="toolResult" class="tool-result">'+resText+'</div>'
     + '</div>'
     + '<div class="nav-bar">'
@@ -1220,7 +1270,10 @@ function buildEndCh2() {
     + '<div class="end-icon">🍁</div>'
     + '<div class="end-title">Конец второй главы</div>'
     + '<div class="end-hint">Ковёр поднял Фила на вершину стены — и мальчишка понял, что означает слово «спланируете». Что ждёт его впереди?</div>'
-    + '<button class="btn-restart" style="background:linear-gradient(135deg,#2ed4c0,#1e8a7a);color:#fff;" onclick="restart()">Читать сначала</button>'
+    + '<div style="display:flex;flex-direction:column;align-items:center;gap:14px;">'
+    + '<button class="btn-restart" style="font-size:1.1em;padding:14px 36px;background:linear-gradient(135deg,#2ed4c0,#1e8a7a);color:#fff;opacity:.55;cursor:default;letter-spacing:.03em;" disabled>Продолжение следует…</button>'
+    + '<button onclick="restart()" style="background:none;border:none;color:#6ec8c0;font-size:0.9em;cursor:pointer;text-decoration:underline;padding:4px;">Читать сначала</button>'
+    + '</div>'
     + '</div>';
 }
 
